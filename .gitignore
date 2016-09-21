@@ -1,0 +1,6 @@
+.history
+.project
+.pydevproject
+*.pyc
+model_att*
+*.pkl

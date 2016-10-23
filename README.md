@@ -1,4 +1,4 @@
-# Scientific Discourse Parser (SciDP)
+# Scientific Discourse Tagger (SciDT)
 LSTM based sequence labeling model for scientific discourse parsing
 
 ## Requirements

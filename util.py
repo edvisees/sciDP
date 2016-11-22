@@ -1,12 +1,13 @@
 import codecs
 import numpy
-
-def read_passages(filename, is_labeled):
+  
+def read_passages(all_passages, is_labeled):
   str_seqs = []
   str_seq = []
   label_seqs = []
   label_seq = []
-  for line in codecs.open(filename, "r", "utf-8"):
+  
+  for line in all_passages:
     lnstrp = line.strip()
     if lnstrp == "":
       if len(str_seq) != 0:

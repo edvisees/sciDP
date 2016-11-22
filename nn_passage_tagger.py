@@ -29,12 +29,12 @@ class PassageTagger(object):
         self.input_size = self.rep_reader.rep_shape[0]
         self.tagger = None
 
-    def make_data(self, trainfilename, use_attention, maxseqlen=None, maxclauselen=None, label_ind=None, train=False):
+    def make_data(self, clauses, use_attention, maxseqlen=None, maxclauselen=None, label_ind=None, train=False):
         print >>sys.stderr, "Reading data.."
         
         # Is this a bug? What happens if we're getting data from previously unlabeled files? 
         #str_seqs, label_seqs = read_passages(trainfilename, is_labeled=True)
-        str_seqs, label_seqs = read_passages(trainfilename, is_labeled = train)
+        str_seqs, label_seqs = read_passages(clauses, is_labeled = train)
         
         print >>sys.stderr, "Sample data for train:" if train else "Sample data for test:"
         print >>sys.stderr, zip(str_seqs[0], label_seqs[0])
@@ -269,7 +269,10 @@ if __name__ == "__main__":
     if train:
         # First returned value is sequence lengths (without padding)
         nnt = PassageTagger(word_rep_file=repfile)
-        _, X, Y = nnt.make_data(trainfile, use_attention, train=True)
+        
+        _, X, Y = nnt.make_data(codecs.open(trainfile, "r", "utf-8"), 
+                                use_attention, 
+                                train=True)
         nnt.train(X, Y, use_attention, att_context, bid, cv=args.cv)
     if test:
         if train:
@@ -306,7 +309,12 @@ if __name__ == "__main__":
             print >>sys.stderr, "Predicting on file %s"%(test_file)
             test_out_file_name = test_file.split("/")[-1].replace(".txt", "")+"_att=%s_cont=%s_bid=%s"%(str(use_attention), att_context, str(bid))+".out"
             outfile = open(test_out_file_name, "w")
-            test_seq_lengths, X_test, _ = nnt.make_data(test_file, use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen, label_ind=label_ind, train=False)
+            test_seq_lengths, X_test, _ = nnt.make_data(codecs.open(test_file, "r", "utf-8"), 
+                                                        use_attention, 
+                                                        maxseqlen=maxseqlen, 
+                                                        maxclauselen=maxclauselen, 
+                                                        label_ind=label_ind, 
+                                                        train=False)
             print >>sys.stderr, "X_test shape:", X_test.shape
             pred_probs, pred_label_seqs, _ = nnt.predict(X_test, bid, test_seq_lengths)
             if show_att:

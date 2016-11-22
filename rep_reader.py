@@ -4,6 +4,11 @@ import os
 import codecs
 import argparse
 import json
+import string
+import re
+import time
+import sys
+
 from elasticsearch import Elasticsearch, helpers
 
 class RepReader(object):
@@ -17,10 +22,14 @@ class RepReader(object):
         if( elastic ):
             self.es = Elasticsearch()
         
+        self.skip_patterns = []
+        self.skip_patterns.append( re.compile('^\<.*\>$') )
+        
+        self.word_rep = {}
+            
         if( elastic and embedding_file is not None) :
             self.build_representation_elastic_index(embedding_file)
         elif(embedding_file is not None): 
-            self.word_rep = {}
             for x in gzip.open(embedding_file):
                 x_parts = x.strip().split()
                 if len(x_parts) == 2:
@@ -49,30 +58,46 @@ class RepReader(object):
         reps = []
         for word in clause.split():
             
-            # Use ELastic search index if available. This is problematic. Drop idea for now. 
-            if( self.elastic ) :
+            w = self.preprocess_word_rep(word) 
+            
+            if w in self.word_rep:
+                rep = self.word_rep[w]
+            
+            # Use elastic search index if available. 
+            elif( self.elastic ):
                 rep_res = self.es.search(index="scidt",doc_type=['rep'],
                     body={"query": {
-                        "term" : { "word" : word }
+                        "term" : { "word" : w }
                     }})
-                if 'hits' in rep_res:
-                    if( 'hits' in rep_res['hits'] ):
-                        rep = self.numpy_rng.uniform(low = self.rep_min, high = self.rep_max, size = self.rep_shape)
-                        self.word_rep[word] = rep
-                    else:
-                        rep = rep_res['hits']['hits'][0]['_source']['rep']
-            else:
-                if word not in self.word_rep:
+                try:
+                    rep = rep_res['hits']['hits'][0]['_source']['rep']
+                    self.word_rep[w] = rep
+                except StandardError:
                     rep = self.numpy_rng.uniform(low = self.rep_min, high = self.rep_max, size = self.rep_shape)
-                    self.word_rep[word] = rep
-                else:
-                    rep = self.word_rep[word]
-                reps.append(rep)
+                    self.word_rep[w] = rep
+                    
+            else:
+                rep = self.numpy_rng.uniform(low = self.rep_min, high = self.rep_max, size = self.rep_shape)
+                self.word_rep[w] = rep
+                
+            reps.append(rep)
+                
         return numpy.asarray(reps)
 
 # format of data for elastic search. 
 #{ "index" : { "_index" : "test", "_type" : "type1", "_id" : "1" } }
 #{ "field1" : "value1" }
+
+    def preprocess_word_rep(self, w):
+        for p in self.skip_patterns:
+            if re.match(p, w) :
+                return None
+        # TODO: FIX UNICODE / STR MISMATCH
+        #w.translate(None, string.punctuation)                                
+        w = re.sub(ur"\p{P}+", "", w)
+        if len(w) == 0 :
+            return None
+        return w.lower()
 
     def decode_ref_file(self, embedding_file):
         for i, x in enumerate(gzip.open(embedding_file)):
@@ -80,9 +105,15 @@ class RepReader(object):
                 if len(x_parts) == 2:
                         continue
         
-                es_fields_keys = ('word', 'rep')
-                es_fields_vals = (x_parts[0], x_parts[1:])
+                w = self.preprocess_word_rep(x_parts[0])
+                if w is None:
+                    continue
                 
+                es_fields_keys = ('word', 'rep')
+                es_fields_vals = (w, x_parts[1:])
+                
+                # Use Global variables to set maxima / minima,
+                # TODO: Find a better way
                 minimum = min(float(x) for x in x_parts[1:])
                 if( minimum < RepReader.rep_min):
                     RepReader.rep_min = minimum
@@ -102,16 +133,36 @@ class RepReader(object):
 
         index_exists = self.es.indices.exists(index=["scidt"],ignore=404)
         
-        res = self.es.search(index="scidt",
-                body={"query": {
-                    "ids" : {
-                        "type" : "rep",
-                        "values" : ["1"]
-                    }
-                }})
-        rep_shape = len(res['hits']['hits'][0]['_source']['rep'])
-
         if( index_exists is False ):
+
+            rep_min = 10000
+            rep_max = -10000  
+            shape = 0
+    
+            i=0
+            count=0
+            length = 0
+            start = time.time()
+            
+            for x in gzip.open(args.repfile):
+                
+                x_parts = x.strip().split()
+                
+                if( len(x_parts) == 2 ):
+                    count = x_parts[0]
+                    length = x_parts[1]
+                    continue
+                
+                minimum = min(float(xx) for xx in x_parts[1:])
+                if( minimum < rep_min):
+                    rep_min = minimum
+                maximum = max(float(xx) for xx in x_parts[1:])
+                if( maximum > rep_max):
+                    rep_max = maximum
+                i=i+1
+                if( i%100000 == 0 ):
+                    print "it: " + str(i) + ", t=" + str(time.time()-start) + " s"
+            
             self.es.indices.create(index='scidt', ignore=400)
             # NOTE the (...) round brackets. This is for a generator.
             gen = ({
@@ -121,30 +172,34 @@ class RepReader(object):
                             "_source": es_d,
                      } for i, es_d in self.decode_ref_file(embedding_file))
             helpers.bulk(self.es, gen)
-            res = self.es.search(index="scidt",
-                body={"query": {
-                    "ids" : {
-                        "type" : "rep",
-                        "values" : ["0"]
-                    }
-                }})
-            rep_shape = len(res['hits']['hits'][1]['_source']['rep'])
+            
             actions = [{
                 "_index": "scidt",
                 "_type": "meta",
                 "_id": 0,
                 "_source": {
-                    "rep_min": str(RepReader.rep_min),
-                    "rep_max": str(RepReader.rep_max),
-                    "rep_shape": str(rep_shape)
+                    "rep_min": str(rep_min),
+                    "rep_max": str(rep_max),
+                    "rep_shape": str(shape)
                 }
-            }]        
+            }]      
+            print actions  
             helpers.bulk(self.es, actions)
-    
+        
         meta = self.es.search(index="scidt",doc_type=['meta'],
                 body={"query": {
                     "match_all": {}
                 }})
+        
+        # Note that if we've just built the index, it doesn't immediately provide a response
+        # So we search and wait until it provides data. 
+        while(len(meta['hits']['hits']) == 0) :
+            time.sleep(5)
+            meta = self.es.search(index="scidt",doc_type=['meta'],
+                body={"query": {
+                    "match_all": {}
+                }}) 
+        
         meta_dict = meta['hits']['hits'][0]['_source']
         self.rep_min = float(meta_dict['rep_min'])
         self.rep_max = float(meta_dict['rep_max'])

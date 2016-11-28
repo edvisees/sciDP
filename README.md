@@ -1,10 +1,42 @@
-# Scientific Discourse Tagger (SciDT)
-LSTM based sequence labeling model for scientific discourse parsing
+# Scientific Discourse Tagger (SciDT) 
 
-## Requirements
+An LSTM based sequence labeling model for analyzing the structure of scientific discourse in text. We provide a `docker` image that allows the system to be run out of the box with the minimum of configuration needed. 
+
+## Basic Python Requirements 
+* Docker (tested with v1.12.3)
+* This repository
+* Pretrained word embedding as a prebuilt elastic search index data directory. Please download this file (http://bmkeg.isi.edu/data/embeddings/es_index_all_data_unique.tar.gz) and unpack it in an directory on the machine where you will be running the docker image. The file will expand into a directory called `data`. 
+
+## Running Docker
+
+First, build the docker image:
+
+```
+  cd $SCIDT_HOME$/docker
+  docker build -t scidt .
+```
+Then run a container based on this image. 
+```
+  cd $SCIDT_HOME$
+  ./start_docker.sh 8888 8787 /path/to/documents /path/to/elasticsearch/data
+```
+This will then load a docker command prompt with all available functionality. 
+
+# Basic SciDT Function (preserved from original edvisees/sciDT version)
+
+We include these instructions from the original version of SciDT (developed by Pradeep Dasigi under Ed Hovy at CMU)
+
+## Basic Python Requirements 
 * Theano (tested with v0.8.0)
 * Keras (tested with v0.3.2)
 * Pretrained word embedding (recommended: http://bio.nlplab.org/#word-vectors): SciDP expects a gzipped embedding file with each line containing word and a the vector (list of floats) separated by spaces
+
+## An Elastic Search Index for Word Embeddings. 
+
+Note, due to the memory requirements imposed by loading word embeddings into memory. We provide additional functionality where the embeddings may be read from a local elastic search index. A gzipped tar file of the embeddings used can be downloaded from here   
+
+
+
 
 ## Training
 ```

@@ -65,6 +65,10 @@ A second script extracts each text passage pertaining to separate figures in sep
 
 The output directory (/tmp/data/tsv_expts) then holds one subdirectory for each paper for which there are each one `*.tsv` spreadsheet for each detected figure in the paper. Thus, this system breaks each paper into small subdocuments each pertaining to a subfigure. 
 
+### Use of Jupyter notebooks from within the container for development and experimentation
+
+The container provides access to a Jupyter endpoint that is accessible from outside the container via the link `http://localhost:8888/`. This provides a framework for Python experimentation and development within the docker image.  
+
 # Basic SciDT Function (preserved from original edvisees/sciDT version)
 
 We include these instructions from the original version of SciDT (developed by Pradeep Dasigi under Ed Hovy at CMU)

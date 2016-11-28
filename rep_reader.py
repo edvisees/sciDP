@@ -84,48 +84,43 @@ class RepReader(object):
                 
         return numpy.asarray(reps)
 
-# format of data for elastic search. 
-#{ "index" : { "_index" : "test", "_type" : "type1", "_id" : "1" } }
-#{ "field1" : "value1" }
-
     def preprocess_word_rep(self, w):
-        for p in self.skip_patterns:
-            if re.match(p, w) :
-                return None
-        # TODO: FIX UNICODE / STR MISMATCH
-        #w.translate(None, string.punctuation)                                
-        w = re.sub(ur"\p{P}+", "", w)
-        if len(w) == 0 :
-            return None
-        return w.lower()
+        return w
+    
+#        for p in self.skip_patterns:
+#            if re.match(p, w) :
+#                return None
+#        w = re.sub(ur"\p{P}+", "", w)
+#        if len(w) == 0 :
+#            return None
 
     def decode_ref_file(self, embedding_file):
         for i, x in enumerate(gzip.open(embedding_file)):
-                x_parts = x.strip().split()
-                if len(x_parts) == 2:
-                        continue
-        
-                w = self.preprocess_word_rep(x_parts[0])
-                if w is None:
+            x_parts = x.strip().split()
+            if len(x_parts) == 2:
                     continue
-                
-                es_fields_keys = ('word', 'rep')
-                es_fields_vals = (w, x_parts[1:])
-                
-                # Use Global variables to set maxima / minima,
-                # TODO: Find a better way
-                minimum = min(float(x) for x in x_parts[1:])
-                if( minimum < RepReader.rep_min):
-                    RepReader.rep_min = minimum
-                maximum = max(float(x) for x in x_parts[1:])
-                if( maximum > RepReader.rep_max):
-                    RepReader.rep_max = maximum
-                                
-                # We return a dict holding values from each line
-                es_d = dict(zip(es_fields_keys, es_fields_vals))
+    
+            w = self.preprocess_word_rep(x_parts[0])
+            if w is None:
+                continue
+            
+            es_fields_keys = ('word', 'rep')
+            es_fields_vals = (w, x_parts[1:])
+            
+            # Use Global variables to set maxima / minima,
+            # TODO: Find a better way
+            minimum = min(float(x) for x in x_parts[1:])
+            if( minimum < RepReader.rep_min):
+                RepReader.rep_min = minimum
+            maximum = max(float(x) for x in x_parts[1:])
+            if( maximum > RepReader.rep_max):
+                RepReader.rep_max = maximum
+                            
+            # We return a dict holding values from each line
+            es_d = dict(zip(es_fields_keys, es_fields_vals))
 
-                # Return the row on each iteration
-                yield i, es_d     # <- Note the usage of 'yield'
+            # Return the row on each iteration
+            yield i, es_d     # <- Note the usage of 'yield'
 
     def build_representation_elastic_index(self, embedding_file):
         
@@ -150,7 +145,7 @@ class RepReader(object):
                 
                 if( len(x_parts) == 2 ):
                     count = x_parts[0]
-                    length = x_parts[1]
+                    shape = x_parts[1]
                     continue
                 
                 minimum = min(float(xx) for xx in x_parts[1:])
@@ -164,6 +159,18 @@ class RepReader(object):
                     print "it: " + str(i) + ", t=" + str(time.time()-start) + " s"
             
             self.es.indices.create(index='scidt', ignore=400)
+            
+            # Mapping to make the encoding of individual words unique.
+            mapping_body = {
+                "properties" : {
+                    "word" : {
+                        "type" : "string",
+                        "index" : "not_analyzed" 
+                    }
+                }
+            }
+            self.es.indices.put_mapping("rep", mapping_body, "scidt")            
+            
             # NOTE the (...) round brackets. This is for a generator.
             gen = ({
                             "_index": "scidt",

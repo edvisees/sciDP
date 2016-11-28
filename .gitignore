@@ -4,3 +4,4 @@
 *.pyc
 model_att*
 *.pkl
+.DS_Store

@@ -52,21 +52,29 @@ if __name__ == "__main__":
     app = Bottle()
     app.install(scidt)
     
-    @app.route('/') # or @route('/scidp')
+    @app.route('/txt') # or @route('/scidp')
     def scidt():
         return '''
-            <form action="/" method="post">
-                <label>Enter the passage of text to be parsed here</label><br>
-                <textarea name="data" rows="20" cols="50"></textarea><br>
+            <form action="/txt" method="post" enctype="multipart/form-data">
+                <label>Upload the file to be parsed here</label><br>
+                <input type="file" name="file">
                 <input value="Submit" type="submit">
             </form>
         '''
     
-    @app.post('/') # or @route('/login', method='POST')
+    @app.post('/txt') # or @route('/login', method='POST')
     def run_scidt_tagger(scidt):
         
-        passages = request.forms.get('data')
-        tags = scidt.tag_passage(passages.split("\n"))
-        return "<p>"  + tags.replace("\n","<br/>") + "</p>"
+        lines = request.files.get('file').file.read().split('\n')
+        passages = []
+        for l in lines:
+            ll = l.split('\t')
+            passages.append(ll[0])
+        tags = scidt.tag_passage(passages)
+        out = "<html><body><table>"
+        for l in zip(passages, tags.split('\n')):
+           out += '<tr><td>' + '</td><td>'.join(l) + '</td></tr>\n' 
+        out += '</table></body></html>' 
+        return out
     
-    run(app, host='localhost', port=8787, debug=True)
+    run(app, host='0.0.0.0', port=8787, debug=True)

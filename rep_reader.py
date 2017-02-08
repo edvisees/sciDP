@@ -95,6 +95,10 @@ class RepReader(object):
 #            return None
 
     def decode_ref_file(self, embedding_file):
+        #from gensim.models import word2vec
+        #model = word2vec.Word2Vec.load_word2vec_format('path/to/GoogleNews-vectors-negative300.bin', binary=True)
+        #model.save_word2vec_format('path/to/GoogleNews-vectors-negative300.txt', binary=False)
+        
         for i, x in enumerate(gzip.open(embedding_file)):
             x_parts = x.strip().split()
             if len(x_parts) == 2:

@@ -96,7 +96,7 @@ RUN wget https://download.elasticsearch.org/elasticsearch/elasticsearch/$ES_PKG_
     rm -f $ES_PKG_NAME.tar.gz && \
     mv $ES_PKG_NAME /tmp/elasticsearch
     
-RUN echo "path.data: /tmp/es_data/" > /tmp/elasticsearch/config/elasticsearch.yml
+RUN echo "path.data: /tmp/es_data/\ncluster.routing.allocation.disk.threshold_enabled: false" > /tmp/elasticsearch/config/elasticsearch.yml
 
 USER root
 

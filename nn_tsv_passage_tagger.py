@@ -18,6 +18,7 @@ from keras.callbacks import EarlyStopping
 
 from attention import TensorAttention
 from keras_extensions import HigherOrderTimeDistributedDense
+import psutil
 
 class PassageTagger_tsv(object):
     def __init__(self, word_rep_file=None, pickled_rep_reader=None):
@@ -56,8 +57,11 @@ class PassageTagger_tsv(object):
         #init_word_rep_len = len(self.rep_reader.word_rep)
         all_word_types = set([])
         for str_seq, label_seq in zip(str_seqs, label_seqs):
-            for label in label_seq:
+            for i, label in enumerate(label_seq):
                 if label not in self.label_ind:
+                    if(label != label):
+                        raise Exception('Found NaN in label for clause: ' + str_seq[i] )
+                    print "%d: %s" % (len(self.label_ind), label)
                     self.label_ind[label] = len(self.label_ind)
             if use_attention:
                 x = numpy.zeros((maxseqlen, maxclauselen, self.input_size))
@@ -97,14 +101,16 @@ class PassageTagger_tsv(object):
                     else:
                         x[-seq_len+i] = numpy.mean(clause_rep, axis=0)
                 X.append(x)
-        final_word_rep_len = len(self.rep_reader.word_rep)
+        #final_word_rep_len = len(self.rep_reader.word_rep)
         #oov_ratio = float(final_word_rep_len - init_word_rep_len)/len(all_word_types)
         #print >>sys.stderr, "OOV ratio: %f" % oov_ratio
-        for y_ind in Y_inds:
+        process = psutil.Process(os.getpid())
+        for j,y_ind in enumerate(Y_inds):
             y = numpy.zeros((maxseqlen, len(self.label_ind)))
             for i, y_ind_i in enumerate(y_ind):
-                y[i][y_ind_i] = 1
+                y[i][int(y_ind_i)] = 1
             Y.append(y) 
+            #print "%d/%d" % (j, len(Y_inds))
         self.rev_label_ind = {i: l for (l, i) in self.label_ind.items()}
         return seq_lengths, numpy.asarray(X), numpy.asarray(Y)
 
@@ -284,14 +290,14 @@ if __name__ == "__main__":
         nnt = PassageTagger_tsv()
 
         clauses = []
-        for trainfile in os.listdir(args.train_dir):
-            if os.path.isfile(trainfile) and trainfile[-4:]=='.tsv' :
-                tsv = pd.read_csv(args.train_dir+'/'+trainfile, sep='\t')
-                for i,row in tsv.iterrows():
-                    clauses.append(row)
-        _, X, Y = nnt.make_data(clauses, 
-                                use_attention, 
-                                train=True)
+        for root, dirs, files in os.walk(args.train_dir):
+            for trainfile in files:
+                if os.path.isfile(os.path.join(root, trainfile)) and trainfile[-4:]=='.tsv' :
+                    print("reading data from " + os.path.join(root, trainfile))
+                    tsv = pd.read_csv(os.path.join(root, trainfile), sep='\t')
+                    for i,row in tsv.iterrows():
+                        clauses.append(row)
+        _, X, Y = nnt.make_data(clauses, use_attention, train=True)
         nnt.train(X, Y, use_attention, att_context, bid, cv=args.cv)
         
     if test:
@@ -336,7 +342,8 @@ if __name__ == "__main__":
                 clauses.append(row)
             
             test_seq_lengths, X_test, _ = nnt.make_data(clauses, 
-                                                        use_attention,                                                        maxseqlen=maxseqlen, 
+                                                        use_attention, 
+                                                        maxseqlen=maxseqlen, 
                                                         maxclauselen=maxclauselen, 
                                                         label_ind=label_ind, 
                                                         train=False)

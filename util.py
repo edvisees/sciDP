@@ -49,7 +49,7 @@ def read_passages_from_tsv(row_iterator):
                 label_seq = []
         
         str_seq.append(clause)
-        label_seq.append(discourse)
+        label_seq.append(discourse.strip())
         old_para = paragraph
             
     if len(str_seq) != 0:

@@ -29,28 +29,36 @@ def read_passages(all_passages, is_labeled):
         label_seq = []
     return str_seqs, label_seqs
     
-def read_passages_from_tsv(row_iterator):
+def read_passages_from_tsv(row_iterator, sec='w'):
     str_seqs = []
     str_seq = []
     label_seqs = []
     label_seq = []
     
-    old_para = ''
+    old_para = '-'
     for row in row_iterator:
-        clause = row['Clause Text']
-        paragraph = row['Paragraph']
-        discourse = row['Discourse Type']
-
-        if paragraph != old_para:
+        c = row['Clause Text']
+        p = row['Paragraph']
+        d = row['Discourse Type']
+        h = row['Headings']
+        
+        if( h != h ):
+            h = "None"
+        if(sec=='m' and h[:4]=='Meth') :
+            continue
+        elif(sec=='r' and h[:3]!='Res'):
+            continue
+        
+        if( p!=old_para and old_para!='-' and old_para[:5]!='title' ):
             if len(str_seq) != 0:
                 str_seqs.append(str_seq)
                 str_seq = []
                 label_seqs.append(label_seq)
                 label_seq = []
         
-        str_seq.append(clause)
-        label_seq.append(discourse.strip())
-        old_para = paragraph
+        str_seq.append(c)
+        label_seq.append(d.strip())
+        old_para = p
             
     if len(str_seq) != 0:
         str_seqs.append(str_seq)

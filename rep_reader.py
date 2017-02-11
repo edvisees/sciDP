@@ -85,6 +85,9 @@ class RepReader(object):
         return numpy.asarray(reps)
 
     def preprocess_word_rep(self, w):
+        if( w == 'exLink'):
+            w = 'article'
+        
         return w
     
 #        for p in self.skip_patterns:

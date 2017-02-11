@@ -10,6 +10,7 @@ import itertools
 import os
 from rep_reader import RepReader
 from util import read_passages, evaluate, make_folds, read_passages_from_tsv
+from sets import Set
 
 from keras.models import Sequential, Graph, model_from_json
 from keras.layers.core import TimeDistributedDense, Dropout
@@ -31,10 +32,10 @@ class PassageTagger_tsv(object):
         self.input_size = self.rep_reader.rep_shape[0]
         self.tagger = None
 
-    def make_data(self, clauses, use_attention, maxseqlen=None, maxclauselen=None, label_ind=None, train=False):
+    def make_data(self, clauses, use_attention, maxseqlen=None, maxclauselen=None, label_ind=None, train=False, sec='w'):
         print >>sys.stderr, "Reading data.."
         
-        str_seqs, label_seqs = read_passages_from_tsv(clauses)
+        str_seqs, label_seqs = read_passages_from_tsv(clauses,sec=sec)
                 
         print >>sys.stderr, "Sample data for train:" if train else "Sample data for test:"
         print >>sys.stderr, zip(str_seqs[0], label_seqs[0])
@@ -250,6 +251,7 @@ if __name__ == "__main__":
     argparser.add_argument('--cv', help="Do cross validation", action='store_true')
     argparser.add_argument('--test_dir', metavar="TESTFILE", type=str,help="Directory of test file name(s), TSV-formatted.")
     argparser.add_argument('--out_dir', type=str, help="Output Directory.")
+    argparser.add_argument('--paper_section', type=str, help="Which Section? [w]hole, ex_[m]eth, [r]esults_only)")
     argparser.add_argument('--use_attention', help="Use attention over words? Or else will average their representations", action='store_true')
     argparser.add_argument('--att_context', type=str, help="Context to look at for determining attention (word/clause)")
     argparser.set_defaults(att_context='word')
@@ -257,6 +259,11 @@ if __name__ == "__main__":
     argparser.add_argument('--show_attention', help="When testing, if using attention, also print the weights", action='store_true')
     args = argparser.parse_args()
     repfile = args.repfile
+
+    if args.paper_section:
+        sec = args.paper_section
+    else: 
+        sec = "w"
     
     out_dir = ''
     if args.out_dir:
@@ -269,9 +276,10 @@ if __name__ == "__main__":
     
     if args.test_dir:
         testfiles = []
-        for fn in os.listdir(args.test_dir):
-            if os.path.isfile(args.test_dir+'/'+fn) and fn[-4:]=='.tsv' :
-                testfiles.append(args.test_dir + "/" + fn)
+        for root, dirs, files in os.walk(args.test_dir):
+            for trainfile in files:
+                if os.path.isfile(os.path.join(root, trainfile)) and trainfile[-4:]=='.tsv' :
+                    testfiles.append(os.path.join(root, trainfile))
         test = True
     else:
         test = False
@@ -297,7 +305,7 @@ if __name__ == "__main__":
                     tsv = pd.read_csv(os.path.join(root, trainfile), sep='\t')
                     for i,row in tsv.iterrows():
                         clauses.append(row)
-        _, X, Y = nnt.make_data(clauses, use_attention, train=True)
+        _, X, Y = nnt.make_data(clauses, use_attention, train=True, sec=sec)
         nnt.train(X, Y, use_attention, att_context, bid, cv=args.cv)
         
     if test:
@@ -329,6 +337,29 @@ if __name__ == "__main__":
                     maxseqlen, maxclauselen = l.td1, l.td2
                     break
                 
+        all_actual_labels = []
+        for test_file in testfiles:
+            tsv = pd.read_csv(test_file, sep='\t')
+            clauses = []
+            for i,row in tsv.iterrows():
+                clauses.append(row)    
+            str_seqs, label_seqs = read_passages_from_tsv(clauses)
+            for l in list(itertools.chain(*label_seqs)):
+                if l not in all_actual_labels:
+                    all_actual_labels.append(l)
+
+        conf_matrix = {}        
+        f_score_counts = {}        
+        for l in all_actual_labels:
+            f_score_counts[l] = {}
+            f_score_counts.get(l)['tp'] = 0
+            f_score_counts.get(l)['tn'] = 0
+            f_score_counts.get(l)['fp'] = 0
+            f_score_counts.get(l)['fn'] = 0
+            conf_matrix[l] = {}
+            for ll in all_actual_labels:
+                conf_matrix[l][ll] = 0
+                
         for test_file in testfiles:
 
             print >>sys.stderr, "Predicting on file %s"%(test_file)
@@ -340,18 +371,34 @@ if __name__ == "__main__":
             clauses = []
             for i,row in tsv.iterrows():
                 clauses.append(row)
+                
+            str_seqs, label_seqs = read_passages_from_tsv(clauses, sec=args.paper_section)
             
             test_seq_lengths, X_test, _ = nnt.make_data(clauses, 
                                                         use_attention, 
                                                         maxseqlen=maxseqlen, 
                                                         maxclauselen=maxclauselen, 
                                                         label_ind=label_ind, 
-                                                        train=False)
+                                                        train=False,
+                                                        sec=args.paper_section)
             print >>sys.stderr, "X_test shape:", X_test.shape
             pred_probs, pred_label_seqs, _ = nnt.predict(X_test, bid, test_seq_lengths)
+
+            for i in range(0, len(label_seqs)):
+                for j in range(0, len(label_seqs[i])):
+                    actual_label = label_seqs[i][j] 
+                    predicted_label = pred_label_seqs[i][j]
+                    conf_matrix[actual_label][predicted_label] += 1
+                    
+                    if( actual_label == predicted_label ) :
+                        f_score_counts.get(actual_label)['tp'] += 1 
+                    elif( actual_label != predicted_label ) :
+                        f_score_counts.get(actual_label)['fn'] += 1 
+                        f_score_counts.get(predicted_label)['fp'] += 1 
            
+            '''
             if show_att:
-                    '''att_weights = nnt.get_attention_weights(X_test.astype('float32'))
+                    att_weights = nnt.get_attention_weights(X_test.astype('float32'))
                     pred_labels = list(itertools.chain(*pred_label_seqs))
                     tsv = pd.read_csv(test_file, sep='\t')
                     tsv['Discourse Label'] = pd.Series(pred_labels)
@@ -367,10 +414,36 @@ if __name__ == "__main__":
                         for clauselen, clause_weights, pred_label in zip(clauselens, sample_att_weights[-len(clauselens):], pred_label_seq):
                             print >>outfile, pred_label, " ".join(["%.4f"%val for val in clause_weights[-clauselen:]])
                         print >>outfile
-                    '''
-            else:
-                pred_labels = list(itertools.chain(*pred_label_seqs))
-                tsv = pd.read_csv(test_file, sep='\t')
-                tsv['Discourse Label'] = pd.Series(pred_labels)
-                print >>sys.stderr, "Output file:", test_out_file_name
-                tsv.to_csv(test_out_file_name, sep='\t')
+                    
+            else:'''
+
+            # Write output to data files.
+            pred_labels = list(itertools.chain(*pred_label_seqs))
+            tsv = pd.read_csv(test_file, sep='\t')
+            tsv['Discourse Label'] = pd.Series(pred_labels)
+            print >>sys.stderr, "Output file:", test_out_file_name
+            tsv.to_csv(test_out_file_name, sep='\t')
+
+        print "CONFUSION MATRIX"
+        s = "            "
+        for l in all_actual_labels:
+            s += "%5s" % (l[:4]) + " "
+        print s
+        for l in all_actual_labels:
+            s = "%12s" % (l)
+            for ll in all_actual_labels:
+                s += "%5d" % (conf_matrix[l][ll])
+            print s
+        
+        print "\n~~~~~~~\n"
+        
+        # PRINT SUMMARY DATA
+        print "%14s||%4s|%4s|%4s|| %4s| %4s|| %4s||" % ('label','tp','fp','fn','P','R','F1')
+        for l in all_actual_labels:
+            tp = f_score_counts.get(l)['tp']
+            fp = f_score_counts.get(l)['fp']
+            fn = f_score_counts.get(l)['fn']
+            P = 0.0 if tp == 0 else 1.0 * tp/(tp+fp)
+            R = 0.0 if tp == 0 else 1.0 * tp/(tp+fn)
+            F1 = (P + R) / 2
+            print "%14s||%4d|%4d|%4d|| %0.2f| %0.2f|| %0.2f||" % (l,tp,fp,fn,P,R,F1)

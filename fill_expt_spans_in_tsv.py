@@ -19,6 +19,7 @@ import re
 from sets import Set
 import re
 
+
 from bokeh.plotting import figure, show, save, output_notebook, output_file
 from bokeh.models import ColumnDataSource, Range1d
 
@@ -35,8 +36,8 @@ def checkForStartBoundary(clause1, clause2, expt_codes, tsv, c_s_lookup, s_c_loo
     if( row1['SentenceId'] == row2['SentenceId'] ):
         return (False,"Same sentence")
     
-    # clause 2 is a title paragraph => true
-    elif( "header" in row2['Codes'] ):
+    # clause 1 is a title paragraph => true
+    elif( "header" in row1['Codes'] ):
         return (True, "?/header") 
     
     #

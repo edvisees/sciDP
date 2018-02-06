@@ -363,7 +363,7 @@ if __name__ == "__main__":
         for test_file in testfiles:
 
             print >>sys.stderr, "Predicting on file %s"%(test_file)
-            test_out_file_name = out_dir + test_file.split("/")[-1].replace(".tsv", "")+"_att=%s_cont=%s_bid=%s"%(str(use_attention), att_context, str(bid))+".tsv"
+            test_out_file_name = test_file.split("/")[-1].replace(".tsv", "")+"_att=%s_cont=%s_bid=%s"%(str(use_attention), att_context, str(bid))+".tsv"
                 
             outfile = open(out_dir + test_out_file_name, "w")
             
@@ -384,6 +384,7 @@ if __name__ == "__main__":
             print >>sys.stderr, "X_test shape:", X_test.shape
             pred_probs, pred_label_seqs, _ = nnt.predict(X_test, bid, test_seq_lengths)
 
+            '''
             for i in range(0, len(label_seqs)):
                 for j in range(0, len(label_seqs[i])):
                     actual_label = label_seqs[i][j] 
@@ -395,7 +396,7 @@ if __name__ == "__main__":
                     elif( actual_label != predicted_label ) :
                         f_score_counts.get(actual_label)['fn'] += 1 
                         f_score_counts.get(predicted_label)['fp'] += 1 
-           
+            '''
             '''
             if show_att:
                     att_weights = nnt.get_attention_weights(X_test.astype('float32'))

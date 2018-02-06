@@ -14,6 +14,7 @@ import re
 
 from sets import Set
 import re
+from tqdm import tqdm
 
 from bs4 import BeautifulSoup
 from bokeh.plotting import figure, show, save, output_notebook, output_file
@@ -380,9 +381,9 @@ def extract_simple_intact_data(input, title, tsv_output):
                 int_dict['orig_fig'] = a.text
                 int_dict['fig'] = fig_text
             if( a.get('name') == "kinetics" ):
-                int_dict['kinetics'] = a.text.replace('\t', ' ').replace('\n', ' ')
+                int_dict['kinetics'] = a.text
             if( a.get('name') == "kinetics_conditions" ):
-                int_dict['kinetics_conditions'] = a.text.replace('\t', ' ').replace('\n', ' ')
+                int_dict['kinetics_conditions'] = a.text
         e_id = i.experimentlist.experimentref.text
         e = all_expt_dict.get(e_id)
         if( e is not None ):
@@ -403,29 +404,20 @@ def extract_simple_intact_data(input, title, tsv_output):
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--inDir', help='Directory for input files')
-    parser.add_argument('-o', '--outDir', help='Directory for output files')
-    parser.add_argument('-p', '--pmid', help='PMID file')
+    parser.add_argument('-t', '--text_mine_file', help='input file')
+    parser.add_argument('-i', '--intact_file', help='input file')
+    parser.add_argument('-o', '--out', help='output file')
     args = parser.parse_args()
 
-    #pmids = []
-    #with open(args.pmid, 'r') as pmid_file:
-    #    for l in pmid_file.readlines():
-    #        pmids.append(l.rstrip())
-    
-    for x in os.walk(args.inDir):
-        for infile in glob(os.path.join(x[0], '*.xml')):
-            fn = ntpath.basename(infile)
-            if( os.path.isfile(infile) and fn.endswith('.xml') ):
-                title = fn.replace(".xml", "")
-                #if( title not in pmids ):
-                #    continue
+    text_mine_tsv = pd.read_csv(args.text_mine_file, sep=',', )
+    lookup = {}
+    for i,row in text_mine_tsv.iterrows():
+        ebit_id = row['ebi_id']
+        lookup[ebit_id]=row
 
-                print(infile)
-                
-                outfile = args.outDir + "/" + title + ".tsv"
-                if( not os.path.isfile(outfile) ):
-                    try:
-                        extract_simple_intact_data(infile, title, outfile)
-                    except KeyError:
-                        print("KeyError for " + infile)
+    intact_tsv = tqdm(pd.read_csv(args.intact_file, sep=',', ))
+    for i,row in intact_tsv.iterrows():
+        ref1 = row['primary_ref']
+        ref2 = row['secondary_ref']
+        if lookuplookup[s]=r
+

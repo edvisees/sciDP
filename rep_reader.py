@@ -219,7 +219,8 @@ class RepReader(object):
         self.rep_max = float(meta_dict['rep_max'])
         self.rep_shape = int(meta_dict['rep_shape']),
         self.numpy_rng = numpy.random.RandomState(12345)
-        
+
+# Running this file pointing to the repfile on its own will generate the elasticsearch index.        
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser(description="Train, cross-validate and run LSTM discourse tagger")
     argparser.add_argument('--repfile', metavar='REP-FILE', type=str, help="Gzipped embedding file")

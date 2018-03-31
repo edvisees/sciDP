@@ -317,7 +317,11 @@ if __name__ == "__main__":
             model_config_file = open("models/model_%s_config.json"%model_ext, "r")
             model_weights_file_name = "models/model_%s_weights"%model_ext
             model_label_ind = "models/model_%s_label_ind.json"%model_ext
-            nnt = PassageTagger_tsv()
+            if args.repfile is None:
+                nnt = PassageTagger_tsv()
+            else
+                nnt = PassageTagger_tsv(args.repfile)
+
             nnt.tagger = model_from_json(model_config_file.read(), custom_objects={"TensorAttention":TensorAttention, "HigherOrderTimeDistributedDense":HigherOrderTimeDistributedDense})
             print >>sys.stderr, "Loaded model:"
             print >>sys.stderr, nnt.tagger.summary()

@@ -319,7 +319,7 @@ if __name__ == "__main__":
             model_label_ind = "models/model_%s_label_ind.json"%model_ext
             if args.repfile is None:
                 nnt = PassageTagger_tsv()
-            else
+            else:
                 nnt = PassageTagger_tsv(args.repfile)
 
             nnt.tagger = model_from_json(model_config_file.read(), custom_objects={"TensorAttention":TensorAttention, "HigherOrderTimeDistributedDense":HigherOrderTimeDistributedDense})

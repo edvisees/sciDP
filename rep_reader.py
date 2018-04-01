@@ -28,8 +28,10 @@ class RepReader(object):
         self.word_rep = {}
             
         if( elastic and embedding_file is not None) :
+            print "embedding: " + embedding_file
             self.build_representation_elastic_index(embedding_file)
         elif(embedding_file is not None): 
+            print "embedding: " + embedding_file
             for x in gzip.open(embedding_file):
                 x_parts = x.strip().split()
                 if len(x_parts) == 2:

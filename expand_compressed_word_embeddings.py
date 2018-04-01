@@ -18,6 +18,7 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--outFile', help='Output file')
     args = parser.parse_args()
 
-    os.remove(args.outFile)
+    if os.path.exists(args.outFile):
+        os.remove(args.outFile)
     model = KeyedVectors.load_word2vec_format(args.inFile, binary=True)
     model.save_word2vec_format(args.inFile, binary=False)

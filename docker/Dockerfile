@@ -87,19 +87,26 @@ RUN git clone https://github.com/spyysalo/nxml2txt /tmp/nxml2txt
 RUN echo "if [[ $# -ne 1 ]] ; then\n  echo \"USAGE ./run_pipeline.sh <N_THREADS>\"\n  exit\nfi\njava -cp sciDT-pipeline-0.1.2-SNAPSHOT-jar-with-dependencies.jar edu.isi.bmkeg.sciDT.bin.SciDT_0_Nxml2SciDT -inDir /tmp/data -maxSentenceLength 500 -nThreads \$\1 -nxml2textPath /tmp/nxml2txt" \
 	> /tmp/sciDT-pipeline/run_pipeline.sh
 
-# install Elastic Search
-RUN useradd -ms /bin/bash scidt
-USER scidt
-WORKDIR /home/scidt
-ENV ES_PKG_NAME elasticsearch-2.3.3
-RUN wget https://download.elasticsearch.org/elasticsearch/elasticsearch/$ES_PKG_NAME.tar.gz --quiet && \
-    tar xvzf $ES_PKG_NAME.tar.gz && \
-    rm -f $ES_PKG_NAME.tar.gz && \
-    mv $ES_PKG_NAME /tmp/elasticsearch
-    
-RUN echo "path.data: /tmp/es_data/\ncluster.routing.allocation.disk.threshold_enabled: false" > /tmp/elasticsearch/config/elasticsearch.yml
+ARG USER_ID
+ARG USER_NAME
 
-USER root
+#
+# Try to emulate the user running the docker image within the image itself.
+#
+RUN useradd -ms /bin/bash $USER_NAME
+RUN usermod -u $USER_ID $USER_NAME
+WORKDIR /tmp/$USER_NAME
+
+ENV ES_PKG_NAME elasticsearch-2.3.3
+RUN wget https://artifacts.elastic.co/downloads/elasticsearch/$ES_PKG_NAME.tar.gz --quiet
+RUN tar xvzf $ES_PKG_NAME.tar.gz
+RUN rm -f $ES_PKG_NAME.tar.gz
+RUN mv $ES_PKG_NAME /tmp/$USER_NAME/elasticsearch
+
+RUN echo "root:iamgroot" | chpasswd
+RUN echo "$USER_NAME:irobot" | chpasswd
+RUN echo "path.data: /tmp/es_data/\ncluster.routing.allocation.disk.threshold_enabled: false" > /tmp/$USER_NAME/elasticsearch/config/elasticsearch.yml
+RUN chown -R $USER_NAME /tmp/$USER_NAME/elasticsearch
 
 # expose jupyter port 
 EXPOSE 8888 

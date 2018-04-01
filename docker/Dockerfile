@@ -2,8 +2,8 @@ FROM ubuntu:16.04
 MAINTAINER Gully Burns <gullyburns@gmail.com>
 
 
-
 # Set the locale
+RUN apt-get clean && apt-get update && apt-get install -y locales
 RUN locale-gen en_US.UTF-8  
 ENV LANG en_US.UTF-8  
 ENV LANGUAGE en_US:en  
@@ -45,10 +45,9 @@ RUN apt-key adv --keyserver pgp.skewed.de --recv-key 98507F25 && \
     
 RUN conda update -y conda conda-build conda-env && \
     # you can add further conda libraries here \
-    conda install -y tqdm termcolor joblib pygobject3 gtk3  \
-    pymysql \
+    conda install -y tqdm termcolor joblib \
     # and further conda channels here \
-    -c pkgw -c floriangeigl -c conda-forge -c bioconda -c jaikumarm 
+    -c pkgw -c floriangeigl -c conda-forge -c bioconda 
 
 RUN conda install -c kundajelab keras=0.3.2
 RUN conda clean -i -l -t -y

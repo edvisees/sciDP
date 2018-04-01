@@ -295,7 +295,10 @@ if __name__ == "__main__":
     if train:
         # First returned value is sequence lengths (without padding)
         #nnt = PassageTagger(word_rep_file=repfile)
-        nnt = PassageTagger_tsv()
+        if args.repfile is None:
+            nnt = PassageTagger_tsv()
+        else:
+            nnt = PassageTagger_tsv(word_rep_file=repfile)
 
         clauses = []
         for root, dirs, files in os.walk(args.train_dir):
@@ -320,7 +323,7 @@ if __name__ == "__main__":
             if args.repfile is None:
                 nnt = PassageTagger_tsv()
             else:
-                nnt = PassageTagger_tsv(args.repfile)
+                nnt = PassageTagger_tsv(word_rep_file=args.repfile)
 
             nnt.tagger = model_from_json(model_config_file.read(), custom_objects={"TensorAttention":TensorAttention, "HigherOrderTimeDistributedDense":HigherOrderTimeDistributedDense})
             print >>sys.stderr, "Loaded model:"

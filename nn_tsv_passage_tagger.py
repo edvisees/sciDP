@@ -346,6 +346,7 @@ if __name__ == "__main__":
                 
         all_actual_labels = []
         for test_file in testfiles:
+            print test_file
             tsv = pd.read_csv(test_file, sep='\t')
             clauses = []
             for i,row in tsv.iterrows():

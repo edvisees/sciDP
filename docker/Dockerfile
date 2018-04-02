@@ -93,7 +93,7 @@ ARG USER_NAME
 #
 # Try to emulate the user running the docker image within the image itself.
 #
-RUN useradd -ms /bin/bash $USER_NAME
+RUN useradd -m /bin/bash -s /tmp/$USER_NAME
 RUN usermod -u $USER_ID $USER_NAME
 WORKDIR /tmp/$USER_NAME
 

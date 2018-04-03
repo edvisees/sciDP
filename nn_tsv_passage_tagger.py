@@ -372,7 +372,8 @@ if __name__ == "__main__":
 
             print >>sys.stderr, "Predicting on file %s"%(test_file)
             test_out_file_name = test_file.split("/")[-1].replace(".tsv", "")+"_att=%s_cont=%s_bid=%s"%(str(use_attention), att_context, str(bid))+".tsv"
-                
+
+            print >> sys.stderr, "Outputting to file %s" % (test_out_file_name)
             outfile = open(out_dir + test_out_file_name, "w")
             
             tsv = pd.read_csv(test_file, sep='\t')

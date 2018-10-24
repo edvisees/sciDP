@@ -1,6 +1,5 @@
 from __future__ import print_function, division
 import argparse
-import argparse_config
 import codecs
 import os
 from glob import glob
@@ -31,21 +30,21 @@ def build_figure_extraction_patterns():
     pattHash['figPatt'] = figPatt
     
     # 0. No alphanumeric codes at all: 'Figure. 1; more text'
-    figPatt.append(re.compile("^" + bf + d + "$"))         
+    figPatt.append(re.compile("^" + bf + d + "$"))
     figPatt.append(re.compile("^" + bf + "\s*(\d+\s*[\.\;\,]{0,1}\s*[a-z]*)[\,\;\.]{0,1}\s*t"))
     figPatt.append(re.compile("^" + bf + "\s*(\d+\s*[\.\;\,]{0,1}\s*[a-z]*)[\,\;\.]{0,1}\s*s"))
     figPatt.append(re.compile("^" + bf + "\s*(\d+\s*[\.\;\,]{0,1}\s*[a-z]*)[\,\;\.]{0,1}\s+and\s+s"))
     
     # [1]
-    simplePatt = re.compile("^" + d + "$");
+    simplePatt = re.compile("^" + d + "$")
     pattHash['simplePatt'] = simplePatt
     
     # [2,4]    
-    space2Patt = re.compile("^" + bf + d + "\s+" + bf + d + "$");
+    space2Patt = re.compile("^" + bf + d + "\s+" + bf + d + "$")
     pattHash['space2Patt'] = space2Patt
 
     # [2,4,6]    
-    space3Patt = re.compile("^"+bf+d+"\s+"+bf+d+"\s+"+bf+d+"$");
+    space3Patt = re.compile("^"+bf+d+"\s+"+bf+d+"\s+"+bf+d+"$")
     pattHash['space3Patt'] = space3Patt
 
     # [2,4]
@@ -61,66 +60,66 @@ def build_figure_extraction_patterns():
     pattHash['simpleComma2Patt'] = simpleComma2Patt
 
     # [2,3,4]
-    comma3Patt = re.compile("^" + bf + d + "[\;\,]" + d + "[\;\,]" + d + "$");
+    comma3Patt = re.compile("^" + bf + d + "[\;\,]" + d + "[\;\,]" + d + "$")
     pattHash['comma3Patt'] = comma3Patt
     
     # [1,2,3]
-    simpleComma3Patt = re.compile("^" + d + "[\;\,]" + d + "[\;\,]" + d + "$");
+    simpleComma3Patt = re.compile("^" + d + "[\;\,]" + d + "[\;\,]" + d + "$")
     pattHash['simpleComma3Patt'] = simpleComma3Patt
 
     # [2,3,4,5]
-    comma4Patt = re.compile("^"+bf+d+"[\;\,]"+d+"[\;\,]"+d+"[\;\,]"+d+"$");
+    comma4Patt = re.compile("^"+bf+d+"[\;\,]"+d+"[\;\,]"+d+"[\;\,]"+d+"$")
     pattHash['comma4Patt'] = comma4Patt
 
     # [2,3,4,5,6]
-    comma5Patt = re.compile("^"+bf+d+"[\;\,]"+d+"[\;\,]"+d+"[\;\,]"+d+"[\;\,]"+d+"$");
+    comma5Patt = re.compile("^"+bf+d+"[\;\,]"+d+"[\;\,]"+d+"[\;\,]"+d+"[\;\,]"+d+"$")
     pattHash['comma5Patt'] = comma5Patt
 
     # [1,2,3,4]
-    simpleComma4Patt = re.compile("^"+d+"[\;\,]"+d+"[\;\,]"+d+"[\;\,]"+d+"$");
+    simpleComma4Patt = re.compile("^"+d+"[\;\,]"+d+"[\;\,]"+d+"[\;\,]"+d+"$")
     pattHash['simpleComma4Patt'] = simpleComma4Patt
 
     # [2,3]
-    and2Patt = re.compile("^" + bf + d + "\s+and\s+" + d + "$");
+    and2Patt = re.compile("^" + bf + d + "\s+and\s+" + d + "$")
     pattHash['and2Patt'] = and2Patt
     
     # [1,2]
-    simpleAnd2Patt = re.compile("^" + d + "\s+and\s+" + d + "$");
+    simpleAnd2Patt = re.compile("^" + d + "\s+and\s+" + d + "$")
     pattHash['simpleAnd2Patt'] = simpleAnd2Patt
 
     # [1,2,3]
-    simple_a_and_b_patt = re.compile("^" + d_split + "\s+and\s+([a-z])$");
+    simple_a_and_b_patt = re.compile("^" + d_split + "\s+and\s+([a-z])$")
     pattHash['simple_a_and_b_patt'] = simple_a_and_b_patt
 
     # [2,3,4]
-    a_and_b_patt = re.compile("^" + bf + d_split + "\s+and\s+([a-z])$");
+    a_and_b_patt = re.compile("^" + bf + d_split + "\s+and\s+([a-z])$")
     pattHash['a_and_b_patt'] = a_and_b_patt
 
     # [1,2,3]
-    simple_a_comma_b_patt = re.compile("^" + d_split + "[\;\,]\s*([a-z])$");
+    simple_a_comma_b_patt = re.compile("^" + d_split + "[\;\,]\s*([a-z])$")
     pattHash['simple_a_comma_b_patt'] = simple_a_comma_b_patt
 
     # [2,3,4]
-    a_comma_b_patt = re.compile("^"+bf+d_split+"[\;\,]\s*([a-z])$");
+    a_comma_b_patt = re.compile("^"+bf+d_split+"[\;\,]\s*([a-z])$")
     pattHash['a_comma_b_patt'] = a_comma_b_patt
 
     # [1,2,3]
-    simple_a_comma_b_comma_c_patt = re.compile("^" + d_split + "[\;\,]\s*([a-z])\s*[\;\,]\s*([a-z])$");
+    simple_a_comma_b_comma_c_patt = re.compile("^" + d_split + "[\;\,]\s*([a-z])\s*[\;\,]\s*([a-z])$")
     pattHash['simple_a_comma_b_comma_c_patt'] = simple_a_comma_b_comma_c_patt
 
     # [2,3,4]
-    a_comma_b_comma_c_patt = re.compile("^"+bf+d_split+"[\;\,]\s*([a-z])\s*[\;\,]\s*([a-z])$");
+    a_comma_b_comma_c_patt = re.compile("^"+bf+d_split+"[\;\,]\s*([a-z])\s*[\;\,]\s*([a-z])$")
     pattHash['a_comma_b_comma_c_patt'] = a_comma_b_comma_c_patt
 
     # [2,3,4,5]
-    a_b_and_c_patt = re.compile("^" + bf + d_split + "[\;\,]\s+([a-z])\s+and\s+([a-z])$");
+    a_b_and_c_patt = re.compile("^" + bf + d_split + "[\;\,]\s+([a-z])\s+and\s+([a-z])$")
     pattHash['a_b_and_c_patt'] = a_b_and_c_patt
 
     # [1,2,3,4]
-    simple_a_b_and_c_patt = re.compile("^" + d_split + "[\;\,]\s+([a-z])\s+and\s+([a-z])$");
+    simple_a_b_and_c_patt = re.compile("^" + d_split + "[\;\,]\s+([a-z])\s+and\s+([a-z])$")
     pattHash['simple_a_b_and_c_patt'] = simple_a_b_and_c_patt
 
-    tableFigPatt = re.compile("^t(ab\.|ab|able){0,1}.*" + bf + d + "$");
+    tableFigPatt = re.compile("^t(ab\.|ab|able){0,1}.*" + bf + d + "$")
     pattHash['tableFigPatt'] = tableFigPatt
 
     intervalPatt = re.compile("^" + bf + interval + "$");
@@ -128,14 +127,14 @@ def build_figure_extraction_patterns():
 
     # simple single table (table 1, t1, tab. 1a)
     # returned value is second group
-    tablePatt = re.compile("^t(ab\.|ab|able){0,1}\s*([\di]+[a-z]{0,1})[\,\;\.]{0,1}$");
+    tablePatt = re.compile("^t(ab\.|ab|able){0,1}\s*([\di]+[a-z]{0,1})[\,\;\.]{0,1}$")
     pattHash['tablePatt'] = tablePatt
 
-    # simple single table (table 1, t1, tab. 1a)
+    # simple supplemental table (table 1, t1, tab. 1a)
     # returned value is third group
-    suppTablePatt = re.compile("^s(upp|upp.|lementary){0,1}\s*t(ab\.|ab|able){0,1}\s*([i\d]+[a-z]{0,1})[\,\;\.]{0,1}$");
+    suppTablePatt = re.compile("^s(upp|upp.|lementary){0,1}\s*t(ab\.|ab|able){0,1}\s*([i\d]+[a-z]{0,1})[\,\;\.]{0,1}$")
     pattHash['suppTablePatt'] = suppTablePatt
-    
+
     return pattHash
 
 def run_simple_matcher(fig_text, patt_hash, patt_code, groups=[1]):
@@ -317,7 +316,7 @@ def extract_simple_intact_data(input, title, tsv_output):
     
     soup = BeautifulSoup(xml, 'lxml')    
 
-    intact_headings = ['pmid','i_id','orig_fig','fig','type','type_xref','p1_name','p1_xref','p1_site','p2_name','p2_xref','p2_site','p3_name','p3_xref','p3_site','i_meth','p_meth']
+    intact_headings = ['pmid','i_id','orig_fig','fig','type','type_xref','p1_name','p1_xref','p1_site','p2_name','p2_xref','p2_site','p3_name','p3_xref','p3_site','i_meth','i_meth_code','p_meth','p_meth_code']
     intact_rows = []
 
     patt_hash = build_figure_extraction_patterns()
@@ -327,7 +326,9 @@ def extract_simple_intact_data(input, title, tsv_output):
     for e in soup.select('experimentlist experimentdescription'):
         ex_dict = {}
         ex_dict['i_meth'] = e.interactiondetectionmethod.names.shortlabel.text
-        ex_dict['p_meth'] = e.participantidentificationmethod.names.shortlabel.text 
+        ex_dict['i_meth_code'] = e.interactiondetectionmethod.xref.primaryref.attrs['id']
+        ex_dict['p_meth'] = e.participantidentificationmethod.names.shortlabel.text
+        ex_dict['p_meth_code'] = e.participantidentificationmethod.xref.primaryref.attrs['id']
         all_expt_dict[e.get('id')] = ex_dict
 
     # INTERACTORS
@@ -372,11 +373,15 @@ def extract_simple_intact_data(input, title, tsv_output):
         e = all_expt_dict.get(e_id)
         if( e is not None ):
             int_dict['i_meth'] = e.get('i_meth', '-')
+            int_dict['i_meth_code'] = e.get('i_meth_code', '-')
             int_dict['p_meth'] = e.get('p_meth', '-')
-        else: 
+            int_dict['p_meth_code'] = e.get('p_meth_code', '-')
+        else:
             int_dict['i_meth'] = '-'
+            int_dict['i_meth_code'] = '-'
             int_dict['p_meth'] = '-'
-            
+            int_dict['p_meth_code'] = '-'
+
         r = []
         for h in intact_headings:
             r.append(int_dict.get(h,'-'))
@@ -394,6 +399,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     pmids = []
+
     with open(args.pmid, 'r') as pmid_file:
         for l in pmid_file.readlines():
             pmids.append(l.rstrip())

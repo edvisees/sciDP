@@ -6,6 +6,7 @@ import argparse
 import theano
 import json
 import pandas as pd
+import csv
 import itertools
 import os
 from rep_reader import RepReader
@@ -273,17 +274,35 @@ if __name__ == "__main__":
         train = True
     else:
         train = False
-    
+
+    errors = False
     if args.test_dir:
         testfiles = []
         for root, dirs, files in os.walk(args.test_dir):
-            for trainfile in files:
-                if os.path.isfile(os.path.join(root, trainfile)) and trainfile[-4:]=='.tsv' :
-                    testfiles.append(os.path.join(root, trainfile))
+            for testfile in files:
+                if os.path.isfile(os.path.join(root, testfile)) and testfile[-4:]=='.tsv' :
+                    try:
+                        tsv = pd.read_csv(os.path.join(root, testfile), sep='\t', quoting=csv.QUOTE_NONE, encoding='utf-8')
+                    except:
+                        e = sys.exc_info()[0]
+                        print "Error: %s in %s" % (e, testfile)
+
+                    for i,row in tsv.iterrows():
+                        p = row['Paragraph']
+                        c = row['Clause Text']
+                        d = row['Discourse Type']
+                        if( p!=p or c!=c or d!=d):
+                            raise Exception('Error in ' + testfile + ' Headings ')
+                        break
+                    testfiles.append(os.path.join(root, testfile))
+
         test = True
     else:
         test = False
-    
+
+    #    if errors:
+    #        raise RuntimeError, "Error in TSV files"
+
     if not train and not test:
         raise RuntimeError, "Please specify a train file or test files."
     
@@ -302,7 +321,7 @@ if __name__ == "__main__":
             for trainfile in files:
                 if os.path.isfile(os.path.join(root, trainfile)) and trainfile[-4:]=='.tsv' :
                     print("reading data from " + os.path.join(root, trainfile))
-                    tsv = pd.read_csv(os.path.join(root, trainfile), sep='\t')
+                    tsv = pd.read_csv(os.path.join(root, trainfile), sep='\t',quoting=csv.QUOTE_NONE, encoding='utf-8')
                     for i,row in tsv.iterrows():
                         clauses.append(row)
         _, X, Y = nnt.make_data(clauses, use_attention, train=True, sec=sec)
@@ -339,10 +358,11 @@ if __name__ == "__main__":
                 
         all_actual_labels = []
         for test_file in testfiles:
-            tsv = pd.read_csv(test_file, sep='\t')
+            print test_file
+            tsv = pd.read_csv(test_file, sep='\t',quoting=csv.QUOTE_NONE, encoding='utf-8')
             clauses = []
             for i,row in tsv.iterrows():
-                clauses.append(row)    
+                clauses.append(row)
             str_seqs, label_seqs = read_passages_from_tsv(clauses)
             for l in list(itertools.chain(*label_seqs)):
                 if l not in all_actual_labels:
@@ -363,15 +383,16 @@ if __name__ == "__main__":
         for test_file in testfiles:
 
             print >>sys.stderr, "Predicting on file %s"%(test_file)
-            test_out_file_name = out_dir + test_file.split("/")[-1].replace(".tsv", "")+"_att=%s_cont=%s_bid=%s"%(str(use_attention), att_context, str(bid))+".tsv"
+            test_out_file_name = test_file.split("/")[-1].replace(".tsv", "")+"_att=%s_cont=%s_bid=%s"%(str(use_attention), att_context, str(bid))+".tsv"
                 
             outfile = open(out_dir + test_out_file_name, "w")
             
-            tsv = pd.read_csv(test_file, sep='\t')
+            tsv = pd.read_csv(test_file, sep='\t', quoting=csv.QUOTE_NONE, encoding='utf-8')
             clauses = []
             for i,row in tsv.iterrows():
                 clauses.append(row)
-                
+
+            print test_file
             str_seqs, label_seqs = read_passages_from_tsv(clauses, sec=args.paper_section)
             
             test_seq_lengths, X_test, _ = nnt.make_data(clauses, 
@@ -384,6 +405,7 @@ if __name__ == "__main__":
             print >>sys.stderr, "X_test shape:", X_test.shape
             pred_probs, pred_label_seqs, _ = nnt.predict(X_test, bid, test_seq_lengths)
 
+            '''
             for i in range(0, len(label_seqs)):
                 for j in range(0, len(label_seqs[i])):
                     actual_label = label_seqs[i][j] 
@@ -395,7 +417,7 @@ if __name__ == "__main__":
                     elif( actual_label != predicted_label ) :
                         f_score_counts.get(actual_label)['fn'] += 1 
                         f_score_counts.get(predicted_label)['fp'] += 1 
-           
+            '''
             '''
             if show_att:
                     att_weights = nnt.get_attention_weights(X_test.astype('float32'))
@@ -405,7 +427,7 @@ if __name__ == "__main__":
                     print >>sys.stderr, "Output file:", test_out_file_name
                     tsv.to_csv(test_out_file_name, sep='\t')
                     tsv = pd.read_csv(test_file, sep='\t')
-                    clauses = []
+                    clauses = []q
                     for i,row in tsv.iterrows():
                         clauses.append(row)
                     clause_seqs, _ = read_passages_from_tsv(clauses)
@@ -419,10 +441,10 @@ if __name__ == "__main__":
 
             # Write output to data files.
             pred_labels = list(itertools.chain(*pred_label_seqs))
-            tsv = pd.read_csv(test_file, sep='\t')
+            tsv = pd.read_csv(test_file, sep='\t',quoting=csv.QUOTE_NONE, encoding='utf-8')
             tsv['Discourse Label'] = pd.Series(pred_labels)
             print >>sys.stderr, "Output file:", test_out_file_name
-            tsv.to_csv(test_out_file_name, sep='\t')
+            tsv.to_csv(test_out_file_name, sep='\t',encoding='utf-8')
 
         print "CONFUSION MATRIX"
         s = "            "

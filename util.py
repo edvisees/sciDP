@@ -44,6 +44,9 @@ def read_passages_from_tsv(row_iterator, sec='w'):
         
         if( h != h ):
             h = "None"
+        if( d != d ):
+            d = ""
+            
         if(sec=='m' and h[:4]=='Meth') :
             continue
         elif(sec=='r' and h[:3]!='Res'):

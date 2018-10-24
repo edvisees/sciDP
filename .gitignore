@@ -5,3 +5,5 @@
 model_att*
 *.pkl
 .DS_Store
+.idea
+

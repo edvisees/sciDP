@@ -6,4 +6,4 @@ model_att*
 *.pkl
 .DS_Store
 .idea
-
+nohup.out

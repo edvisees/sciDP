@@ -1,7 +1,9 @@
 FROM ubuntu:16.04
 MAINTAINER Gully Burns <gullyburns@gmail.com>
 
+
 # Set the locale
+RUN apt-get clean && apt-get update && apt-get install -y locales
 RUN locale-gen en_US.UTF-8  
 ENV LANG en_US.UTF-8  
 ENV LANGUAGE en_US:en  
@@ -43,10 +45,9 @@ RUN apt-key adv --keyserver pgp.skewed.de --recv-key 98507F25 && \
     
 RUN conda update -y conda conda-build conda-env && \
     # you can add further conda libraries here \
-    conda install -y tqdm termcolor joblib pygobject3 gtk3  \
-    pymysql \
+    conda install -y tqdm termcolor joblib \
     # and further conda channels here \
-    -c pkgw -c floriangeigl -c conda-forge -c bioconda -c jaikumarm 
+    -c pkgw -c floriangeigl -c conda-forge -c bioconda 
 
 RUN conda install -c kundajelab keras=0.3.2
 RUN conda clean -i -l -t -y
@@ -77,6 +78,7 @@ RUN pip install textstat git+https://github.com/dask/dask-learn.git wordcloud bo
     find /usr/share/nltk_data/ -name *.zip | xargs -n1 -I@ rm @ && \ 
     rm -rf /root/.cache/pip/*
 
+<<<<<<< HEAD
 # install Elastic Search
 RUN useradd -ms /bin/bash scidt
 USER scidt
@@ -88,8 +90,37 @@ RUN wget https://download.elasticsearch.org/elasticsearch/elasticsearch/$ES_PKG_
     mv $ES_PKG_NAME /tmp/elasticsearch
     
 RUN echo "path.data: /tmp/es_data/\ncluster.routing.allocation.disk.threshold_enabled: false" > /tmp/elasticsearch/config/elasticsearch.yml
+=======
+RUN mkdir /tmp/sciDT-pipeline
+RUN wget https://zenodo.org/record/177565/files/sciDT-pipeline-0.1.2-SNAPSHOT-jar-with-dependencies.jar && \
+    mv sciDT-pipeline-0.1.2-SNAPSHOT-jar-with-dependencies.jar /tmp/sciDT-pipeline
 
-USER root
+RUN git clone https://github.com/spyysalo/nxml2txt /tmp/nxml2txt
+
+RUN echo "if [[ $# -ne 1 ]] ; then\n  echo \"USAGE ./run_pipeline.sh <N_THREADS>\"\n  exit\nfi\njava -cp sciDT-pipeline-0.1.2-SNAPSHOT-jar-with-dependencies.jar edu.isi.bmkeg.sciDT.bin.SciDT_0_Nxml2SciDT -inDir /tmp/data -maxSentenceLength 500 -nThreads \$\1 -nxml2textPath /tmp/nxml2txt" \
+	> /tmp/sciDT-pipeline/run_pipeline.sh
+
+ARG USER_ID
+ARG USER_NAME
+>>>>>>> dd504baf07513c45b4dd27f44a4418ad6b84a5d4
+
+#
+# Try to emulate the user running the docker image within the image itself.
+#
+RUN useradd -m /bin/bash -s /tmp/$USER_NAME
+RUN usermod -u $USER_ID $USER_NAME
+WORKDIR /tmp/$USER_NAME
+
+ENV ES_PKG_NAME elasticsearch-2.3.3
+RUN wget https://artifacts.elastic.co/downloads/elasticsearch/$ES_PKG_NAME.tar.gz --quiet
+RUN tar xvzf $ES_PKG_NAME.tar.gz
+RUN rm -f $ES_PKG_NAME.tar.gz
+RUN mv $ES_PKG_NAME /tmp/$USER_NAME/elasticsearch
+
+RUN echo "root:iamgroot" | chpasswd
+RUN echo "$USER_NAME:irobot" | chpasswd
+RUN echo "path.data: /tmp/es_data/\ncluster.routing.allocation.disk.threshold_enabled: false" > /tmp/$USER_NAME/elasticsearch/config/elasticsearch.yml
+RUN chown -R $USER_NAME /tmp/$USER_NAME/elasticsearch
 
 # expose jupyter port 
 EXPOSE 8888 

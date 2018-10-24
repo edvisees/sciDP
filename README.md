@@ -1,8 +1,9 @@
-<<<<<<< HEAD
+
 # Scientific Discourse Tagger (SciDT) 
 LSTM based sequence labeling model for scientific discourse tagger. Read the [paper](https://arxiv.org/abs/1702.05398) for more details.
 
 An LSTM based sequence labeling model for analyzing the structure of scientific discourse in text. We provide a `docker` image that allows the system to be run out of the box with the minimum of configuration needed. 
+ Read the [paper](https://arxiv.org/abs/1702.05398) for more details.
 
 ## Basic Python Requirements 
 * Docker (tested with v1.12.3)
@@ -107,3 +108,7 @@ You can specify test files while training itself using `--test_files` arguments.
 python nn_passage_tagger.py REPFILE --test_files TESTFILE1 [TESTFILE2 ..] --use_attention
 ```
 Make sure you use the same options for attention, context and bidirectional as you used for training.
+
+~~~~~~~~~~~~~~~~~~~~
+
+python nn_tsv_passage_tagger.py --test_dir /tmp/data/tsv_clause/ --out_dir /tmp/data/disc_temp --use_attention --att_context clause

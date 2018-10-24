@@ -1,5 +1,7 @@
 import codecs
 import numpy
+import os
+import pandas as pd
     
 def read_passages(all_passages, is_labeled):
     str_seqs = []
@@ -70,6 +72,18 @@ def read_passages_from_tsv(row_iterator, sec='w'):
         label_seq = []
         
     return str_seqs, label_seqs
+
+def read_clauses_from_tsv_directory(dir):
+    clauses = []
+    for root, dirs, files in os.walk(dir):
+        for trainfile in files:
+            if os.path.isfile(os.path.join(root, trainfile)) and trainfile[-4:]=='.tsv' :
+                print("reading data from " + os.path.join(root, trainfile))
+                tsv = pd.read_csv(os.path.join(root, trainfile), sep='\t')
+                for i,row in tsv.iterrows():
+                    row['file'] = trainfile[:len(trainfile)-4]
+                    clauses.append(row)
+    return clauses
 
 def evaluate(y, pred):
     accuracy = float(sum([c == p for c, p in zip(y, pred)]))/len(pred)

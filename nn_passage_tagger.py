@@ -105,7 +105,6 @@ class PassageTagger(object):
         self.rev_label_ind = {i: l for (l, i) in self.label_ind.items()}
         return seq_lengths, numpy.asarray(X), numpy.asarray(Y)
 
-
     def get_attention_weights(self, X_test):
         if not self.tagger:
             raise RuntimeError, "Tagger not trained yet!"

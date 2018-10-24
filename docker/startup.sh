@@ -1,5 +1,3 @@
 #!/bin/bash
-start-notebook.sh 
-start-elastic.sh 
-start-scidt.sh 
+start-elastic.sh
 /bin/bash

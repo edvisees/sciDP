@@ -1,7 +1,6 @@
 FROM ubuntu:16.04
 MAINTAINER Gully Burns <gullyburns@gmail.com>
 
-
 # Set the locale
 RUN apt-get clean && apt-get update && apt-get install -y locales
 RUN locale-gen en_US.UTF-8  
@@ -78,19 +77,6 @@ RUN pip install textstat git+https://github.com/dask/dask-learn.git wordcloud bo
     find /usr/share/nltk_data/ -name *.zip | xargs -n1 -I@ rm @ && \ 
     rm -rf /root/.cache/pip/*
 
-<<<<<<< HEAD
-# install Elastic Search
-RUN useradd -ms /bin/bash scidt
-USER scidt
-WORKDIR /home/scidt
-ENV ES_PKG_NAME elasticsearch-2.3.3
-RUN wget https://download.elasticsearch.org/elasticsearch/elasticsearch/$ES_PKG_NAME.tar.gz --quiet && \
-    tar xvzf $ES_PKG_NAME.tar.gz && \
-    rm -f $ES_PKG_NAME.tar.gz && \
-    mv $ES_PKG_NAME /tmp/elasticsearch
-    
-RUN echo "path.data: /tmp/es_data/\ncluster.routing.allocation.disk.threshold_enabled: false" > /tmp/elasticsearch/config/elasticsearch.yml
-=======
 RUN mkdir /tmp/sciDT-pipeline
 RUN wget https://zenodo.org/record/177565/files/sciDT-pipeline-0.1.2-SNAPSHOT-jar-with-dependencies.jar && \
     mv sciDT-pipeline-0.1.2-SNAPSHOT-jar-with-dependencies.jar /tmp/sciDT-pipeline
@@ -102,7 +88,6 @@ RUN echo "if [[ $# -ne 1 ]] ; then\n  echo \"USAGE ./run_pipeline.sh <N_THREADS>
 
 ARG USER_ID
 ARG USER_NAME
->>>>>>> dd504baf07513c45b4dd27f44a4418ad6b84a5d4
 
 #
 # Try to emulate the user running the docker image within the image itself.
@@ -112,7 +97,7 @@ RUN usermod -u $USER_ID $USER_NAME
 WORKDIR /tmp/$USER_NAME
 
 ENV ES_PKG_NAME elasticsearch-2.3.3
-RUN wget https://artifacts.elastic.co/downloads/elasticsearch/$ES_PKG_NAME.tar.gz --quiet
+RUN wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.3.3/$ES_PKG_NAME.tar.gz --quiet
 RUN tar xvzf $ES_PKG_NAME.tar.gz
 RUN rm -f $ES_PKG_NAME.tar.gz
 RUN mv $ES_PKG_NAME /tmp/$USER_NAME/elasticsearch

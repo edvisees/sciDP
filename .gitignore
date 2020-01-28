@@ -1,0 +1,9 @@
+.history
+.project
+.pydevproject
+*.pyc
+model_att*
+*.pkl
+.DS_Store
+.idea
+nohup.out

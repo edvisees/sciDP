@@ -1,0 +1,559 @@
+The MDC1 SDTD motif does not conform to consensus sequences targeted by ATM or other DDR kinases .	result
+Instead , both the serine and threonine residues in the SDTD sequence match the CK2 consensus motif of phosphorylated serine/threonine followed by an acidic residue at the +3 position (	result
+p [ S/T ] xxD/E	result
+Consistent with this , a bacterially expressed protein ( glutathione S-transferase ( GST ) -SDTD2 ) encompassing two MDC1 SDTD motifs ( contained within amino-acid residues 296-340 of MDC1 ) was efficiently	result
+phosphorylated by recombinant CK2 in vitro , as shown by a marked decrease in electrophoretic mobility and detection by anti-MDC1 pS329/pT331 antiserum ( Fig 2C , upper and lower panels , respectively )	result
+By contrast , the equivalent protein bearing alanine substitutions of Thr 301 and	result
+Thr 331 ( GST-SDAD2 ) , while being phosphorylated by CK2 to some degree ( presumably on CK2 consensus serine residues retained in the SDAD motifs present in this fusion protein ) , was detected only weakly with the anti-MDC1 pS329/pT331 antiserum ( Fig 2C )	result
+Moreover ,	result
+although CK2-mediated phosphorylation of the GST-SDTD2 protein allowed it to retrieve MRN from HeLa nuclear extracts	result
+
+ErbB family members show high homology in the kinase domain ( 59-81 % identity ) ,	fact
+whereas the C-terminal domains are more divergent ( 11-25 % identity )	fact
+ErbB3 was the receptor showing the weakest homology to the other three receptors .	result
+Nevertheless , characteristic sequences around two tyrosine residues are identical in all four receptors : tyrosines Y900 of EGFR , Y908 of ErbB2 , Y897 of ErbB3 and Y906 of ErbB4 , all are embedded in the sequence SDVWSYGVTVW ; and	result
+tyrosine Y944 of EGFR , Y952 of ErbB2 , Y941 of ErbB3 and Y950 of ErbB4 , all have the identical sequence CTIDVYMIMVK ( underlined and color coded in Figure 1 )	result
+Tyrosine 944 of the EGF-receptor is phosphorylated by Src-kinase ( Stover et al , 1995 ) .	result
+To both of these shared tyrosine-containing sequences no interaction partners were found ,	result
+suggesting that these sequences are conserved for structural functions or that they mediate other types of effects	implication
+Furthermore , two pairs of phosphotyrosine-containing sequences are identical in EGFR and ErbB2 .	fact
+One of these pairs ( pY764 in EGFR and pY772 in ErbB2 ) has no interaction partner and the other ( pY10l6 in EGFR and pY1023 in ErbB2 ) mediates interaction with PTP-2c .	fact
+In addition , the protein sequence around pY978 in EGFR and pY984 in ErbB4 is identical , and in our experiments , binds STAT5 and PTP-2c	result
+when phosphorylated	result
+
+We have previously demonstrated	result
+The dispensable role of IKKalpha in NF-kappaB activation through TNFR-I was also confirmed by the detection of phosphorylated IkappaBalpha in IKKalpha-deficient EFs after TNF stimulation ( Fig . 2 C ) .	result
+Because NIK is essential for LTbetaR signaling , as demonstrated above , and NIK has been shown to phosphorylate IKKalpha 26	result
+, it is important to determine whether IKKalpha is also essential for LTbetaR signaling .	hypothesis
+We therefore treated EFs from IKKalpha-deficient mice with agonistic anti-LTbetaR mAb and assessed NF-kappaB activation by the detection of phosphorylated IkappaBalpha .	method
+We found	result
+that IKKalpha-deficient EFs showed no IkappaBalpha phosphorylation after LTbetaR stimulation , suggesting that NIK-IKKalpha constitutes an important pathway in LTbetaR signaling ( Fig . 2 B )	result
+LTbetaR expression assessed by flow-cytometric analysis with anti-LTbetaR mAb ( AF.H6 ) was similar among wild-type , aly , and IKKalpha-deficient EFs ( Fig . 2 D ) .	result
+The basal level of NF-kappaB activation , assessed by the treatment of EFs with ALLN alone ,	result
+which blocks the degradation of phosphorylated IkappaBalpha by proteasomes 3	fact
+
+In addition to direct binding of Grb2 to phosphotyrosine residues of receptor kinases , Grb2 can also be recruited to the receptor by binding	fact
+to Shc when Shc is tyrosine phosphorylated as a result of receptor stimulation	fact
+Phosphorylation of Shc results in binding of Grb2 to the phosphorylated tyrosine of Shc via its SH2 domain .	fact
+We found	result
+that five bait phosphopeptides had Grb2 and Shc as common binding partners	result
+However , in all five cases , the bait peptide contained overlapping binding motifs for Grb2 and Shc (	result
+see also inset in Figure 3	result
+Furthermore , the experiments were carried out in cells	method
+that were not especially stimulated with growth factor ( even though they were grown in the presence of serum )	method
+Thus ,	implication
+most signal-dependent multi-protein complexes are not present	implication
+Therefore , the identification of Grb2 in our pull-down experiments is most likely due	implication
+to direct binding and not indirect binding as an interaction partner of Shc	implication
+For the above reasons , we believe	implication
+that our experiments generally yield the direct or primary phosphotyrosine interactome rather than protein complexes	implication
+
+Like LPS , the TLR3 ligand poly ( I : C ) also induces lethality in mice through a TNF-dependent mechanism27 .	result
+We thus examined the effect of Peli1 deficiency on the lethality induced by poly ( I : C ) .	method
+Compared to LPS , poly ( I : C ) was relatively inefficient in	result
+inducing lethality	result
+Nevertheless , at a high dose ( 0.5 mug/g body weight ) , poly ( I : C ) induced death of most of the Peli1+/+ mice within 8 hours but none of the Peli1-/- mice at this early time point ( Fig . 1b ) .	result
+Even at late times , only 1 out of 6 Peli1-/- mice died .	result
+
+Apg12 Conjugation Is Not Required for Membrane Targeting of Apg5	implication
+, but Is Essential for Membrane Elongation	implication
+
+To assess whether PAG is identical to the GEM- and Fyn-associated pp80 and to the major leukocyte tyrosine-phosphorylated 80-kD polypeptide	goal
+, GEMs were immunoprecipitated from Raji cells using CD59 mAb and subjected to in vitro kinase assay followed by reprecipitation using anti-PAG mAbs .	method
+As demonstrated in Fig . 3 A	result
+, pp80 was selectively reprecipitated from the mixture of in vitro-phosphorylated GEM proteins .	result
+Similarly , a polyclonal mouse anti-PAG Ab reprecipitated pp80-85 from an in vitro-labeled Fyn immunoprecipitate prepared from resting human T lymphocytes ( Fig . 3 B ) .	result
+Finally , anti-PAG immunosorbent specifically removed the tyrosine-phosphorylated 75-80-kD protein from lysates of peripheral blood T cells ( Fig . 3 C ) .	result
+Thus , PAG is identical to GEM/Fyn-associated pp80-85 and to the leukocyte tyrosine-phosphorylated pp80 .	implication
+
+The above data strongly suggest	implication
+that NIK and IKKalpha together control LTbetaR signaling with a close mechanistic relationship in their pathway	implication
+We have therefore reasoned	hypothesis
+that impaired LTbetaR signaling in aly mice may be due to defective interaction between mutated NIK and IKKalpha	hypothesis
+To investigate this , NIK and IKKalpha were coexpressed in COS-7 cells	goal
+, and protein interactions were assessed by immunoprecipitation .	method
+Association of wild-type NIK with IKKalpha was easily detected ( Fig . 4 ) .	result
+In contrast , association of aly type NIK , which corresponds to a G855R substitution in mice , with IKKalpha was disrupted by the mutation ,	result
+providing further support for the role of NIK-IKKalpha as an essential pathway for NF-kappaB activation in LTbetaR signaling	implication
+Despite this finding , the possibility remains	hypothesis
+that aly mice might have a different phenotype from NIK-null mutation mice	hypothesis
+
+TOR signaling has been well established in the regulation of cell and organ size in Drosophila35 , 36 .	fact
+This led	method
+us to examine the contribution of dRagA and dRagC to cell growth in vivo	method
+dRagA wild type , constitutively active mutant dRagA Q61L , and dominant negative mutant dRagA T16N were each expressed in posterior wing compartments	method
+using the posterior driver en-GAL4	method
+We found	result
+that expression of the constitutively active dRagA Q61L but not the wild type dRagA significantly increased posterior compartment size relative to that of the control anterior compartment ( Fig . 4a )	result
+In contrast , expression of the dominant negative dRagA T16N decreased posterior wing compartment size .	result
+Consistent with these results , expression of dRagA Q61L increased individual cell size of the wing ,	result
+while expression of dRagA T16N reduced cell size ( Fig . 4b )	result
+We also expressed dRagA in the dorsal wing surface of the wing	result
+using the dorsal specific ap-GAL4	result
+As predicted	result
+, expression of dRagA Q61L or dRagA T16N caused wing curvature downward or upward , respectively ( Fig .	result
+S4a , b ) .	result
+These results support	implication
+that high activity of dRagA promotes cell growth and low activity of dRagA inhibits cell growth	implication
+
+We previously reported	result
+that mitogenic stimulation of resting CCL39 cells led to a rapid nuclear translocation of MAPKs into the nucleus ( 27 ) .	result
+Translocation into the nucleus correlated nicely with the persistent activation of MAPK during the G1 phase of the cell cycle .	result
+For example , serum or alpha-thrombin , two potent mitogens of CCL39 cells , induced persistent MAPK activation and nuclear localization .	result
+In contrast , the thrombin receptor peptide activator or TPA , which transiently activates MAPK , failed	result
+to induce nuclear translocation of MAPK ( 27 ) .	result
+This result led	hypothesis
+us to postulate that the p42/p44 MAPK cascade itself controls the nuclear translocation of MAPK .	hypothesis
+Therefore , we tested	goal
+whether addition of the specific MEK inhibitor PD 98059 ( 12 ) was sufficient to block the entry of p42/p44 MAPK in the nucleus in response to serum .	goal
+This inhibitor has been previously shown	result
+to inhibit by up to 90 % MAPK activation without affecting the activation of other MAPK cascades , such as the JNK and p38 MAPK pathways ( 2 ) .	result
+In accordance to our and others ' previous observations , p42/p44 MAPK immunostaining is predominantly cytoplasmic in serum-deprived cells ( Fig . 1 A ) and in cells treated by the MEK inhibitor PD 98059 alone ( Fig . 1 D ) ,	result
+whereas within 3 h of stimulation by 10 % FCS , it is relocated markedly in the nucleus ( Fig . 1 B ) .	result
+As depicted in Fig . 1 C , the addition of the MEK inhibitor PD 98059 ( 30 muM ) at the time of serum addition was sufficient	result
+to block nuclear translocation of p42/p44 MAPK .	result
+As	result
+was reported by Alessi et al .	result
+( 2 ) we found	result
+that MAPK activity was not totally inhibited by 30 muM of PD 98059 compound in CCL39 cells ( up to 80 % inhibition ) .	result
+This incomplete inhibition could explain	implication
+why in certain cells some nuclear localization of p42/p44 MAPK remained .	implication
+In these cells it is possible	hypothesis
+that MAPK stimulation by serum may be extremely potent .	hypothesis
+However , this result indicates	implication
+that activation of the p42/p44 MAPK signaling cascade in response to serum is absolutely required for nuclear translocation of p42/p44 MAPK .	implication
+
+Quantitative RT-PCR analysis was performed	method
+to ascertain the expression of Ror2 in 293 and L cells	goal
+A specific Ror2 transcript in the L cell sample did not emerge until after 40 cycles of amplification ,	result
+indicating that Ror2 is expressed in almost immeasurably low abundance in L cells	implication
+Quantification of the real-time data revealed	method
+that Ror2 transcripts were over 700 times more abundant in 293 cells than in L cells ( Figure 6C )	result
+mRor2 expression thus appears	implication
+to be required for Wnt5a-mediated inhibition of Wnt/beta-catenin signaling in mouse L cells	implication
+
+TRF2 was overexpressed in IMR90 primary fibroblasts using a retroviral vector .	method
+Under these conditions , TRF2 saturates its telomeric binding sites and is present in the nucleoplasm .	result
+While control IMR90 cells showed the expected reduction in mitotic index after ionizing radiation ( IR )	result
+, TRF2 overexpression partially abrogated this checkpoint response , increasing the percentage of cells entering mitosis from 0.3 % to 8 % ( Figure 1 ) .	result
+The inappropriate entry into mitosis is indicative of a failure of the cell cycle checkpoints .	implication
+Since cell cycle arrest after IR largely depends on ATM ( reviewed in Shiloh 2003 )	fact
+, we asked whether TRF2 was acting on this kinase .	hypothesis
+Caffeine , an inhibitor of ATM and the related kinase ATR , suppressed IR-induced arrest to a similar extent as TRF2 ( Figure 1 ) .	result
+Furthermore , caffeine had	result
+no additional effect on the ability of TRF2-overexpressing cells to bypass the DSB checkpoint , suggesting that TRF2 and caffeine target	none
+the same step in the response pathway .	implication
+
+Based on these results , primary PAG immunoprecipitates obtained from lysates of unstimulated or pervanadate-treated hematopoietic cells were analyzed for the presence of the above cytoplasmic	method
+signaling molecules .	method
+Small amounts of Fyn ( but not Lck ; not shown ) were found in PAG immunoprecipitates prepared from unstimulated peripheral blood T cells ( Fig . 7 B ) but not Jurkat or Raji cells ( not shown ) .	result
+Moreover , Fyn and PAG also associated with each other	result
+when coexpressed in COS cells ( Fig . 7 E ) .	result
+However , the interaction between Fyn and PAG seems	result
+to be independent from the tyrosine phosphorylation status of PAG , as it was not altered after PP1 treatment of the resting T cells ( which caused a strong decrease of PAG tyrosine phosphorylation ; Fig . 7B ) .	result
+
+Because p130CAS is known to translocate to focal adhesions when phosphorylated by the integrin pathway ( Harte et al. , 1996 ) , and since PTP-PEST and p130CAS associate via an SH3 proline-rich domain interaction ( Garton et al. , 1997 )	fact
+, we first verified if PTP-PEST could translocate within a cell following integrin stimulation .	hypothesis
+COS-1 cells were transfected with a PTP-PEST construct tagged with the hemagglutinin antigen ( HA ) epitope ,	method
+allowing visualization by indirect immunofluorescence ( Fig . 1 )	method
+Untransfected cells showed no immunofluorescence staining ( Fig . 1 b ) ,	result
+demonstrating the absence of nonspecific staining with the 12CA5 antibody	implication
+In transfected cells ( Fig . 1 d ) , PTP-PEST localization was diffuse in the cytoplasm ,	result
+as previously described ( Charest et al. , 1995 )	result
+When the cells were stimulated with 0.1 mug/ml of EGF , no significant change in PTP-PEST staining was observed ( Fig . 1 f ) ,	result
+although PTP-PEST was shown previously to associate with the EGF receptor via Grb2 ( Charest et al. , 1997 )	result
+However , for a significant percentage of attached transfected cells plated on fibronectin-coated slides for 45 min , staining for the HA epitope showed a clear relocalization to the membrane periphery even with lower levels of protein expression ( Fig . 1 g ) .	result
+These results prove	implication
+that , in COS-1 cells , PTP-PEST can relocalize to the membrane periphery following integrin , but not EGF receptor , stimulation	implication
+
+To explore the intracellular localization of the Rac1-beta-Pix compl	goal
+complex, we transfected HEK293 cells with HA-tagged Rac1 and seeded these cells on fibronectin for 1 h.	method
+Immunostainings for endogenous beta-Pix and HA-tagged Rac1	method
+showed that in the basal section of the cell, Rac1 and beta-Pix colocalize to FAs (Manser et al., 1998; Turner et al., 1999) particularly at the periphery of the cell (Fig. 2 F, basal and zoom).	result
+In the middle section of the cell, the two proteins colocalize markedly at the periphery but not in the center and colocalize most prominently in membrane ruffles (Fig. 2 F, middle).	result
+
+To determine whether the isolation membranes are derived from the newly generated , Apg5-associated small compartment	goal
+, we carried out time-lapse video microscopy .	method
+Small dots of GFP-Apg5 appeared and elongated slowly , and then bent and became semi-spherical structures ( Fig . 7 A and videos 1-3 ) .	result
+Finally , the GFP signal disappeared	result
+when the structure was close to forming a complete spherical body .	result
+Such a pattern of development is consistent with the electron microscopic images ( Fig . 6 , E-J ) .	result
+The time-lapse microscopy showed	method
+that the GFP-Apg5 spots were transient , appearing at random times during amino acid starvation and disappearing immediately before or after circularization , never forming any stable structures ( Fig . 7 B ) .	result
+
+Another focal adhesion component	none
+to be investigated	none
+The role of p130CAS in migration was shown	result
+to reside in the pathways triggered by FAK ( Cary et al. , 1998 ) , which is associated with the integrins and becomes active by transphosphorylation	result
+Phosphorylation of Y397 on FAK , which is the binding site of the Src kinase , was shown	result
+to be crucial for its role in cell migration ( Cary et al. , 1998 )	result
+Fig . 4 a shows	result
+that FAK is slightly hyperphosphorylated in the PTP-PEST null cells , suggesting that this PTP may regulate its phosphorylation level	none
+Since FAK and PTP-PEST were never shown to interact directly , it is possible	hypothesis
+that this hyperphosphorylation is a consequence of p130CAS or paxillin hyperphosphorylation	hypothesis
+
+To investigate whether CK2 phosphorylation of the MDC1 SDTD region promotes MRN binding in vivo , we transiently expressed	goal
+a haemagglutinin ( HA ) -tagged MDC1 SDTD fragment coupled to a nuclear localization sequence in U20S cells ( HA-SDTD6 ; supplementary Fig S1C online )	method
+Immunoblotting showed	result
+that treating these cells with the CK2 inhibitor 4,5,6,7-tetrabromo-benzimidazole increased the electrophoretic mobility of the MDC1 SDTD fragment and reduced the ability of the fragment to co-immunoprecipitate MRN ( Fig 2E )	result
+
+Autophagy is thought	hypothesis
+to be a major pathway for degradation of cytoplasmic proteins .	hypothesis
+We assessed bulk degradation of long-lived proteins by	goal
+measuring the release of TCA-soluble [ 14C ] valine from cells .	method
+Lysosomal protein degradation was estimated by the difference between the [ 14C ] valine release from cells treated with and without lysosomotropic reagents such as chloroquine and bafilomycin A1 , a vacuolar H+-ATPase inhibitor .	method
+Lysosomal protein degradation induced by amino acid starvation in APG5-/- cells was significantly reduced to less than half of that in APG5+/+ and APG5+/- cells ( Fig . 3A and Fig .	result
+Apg5 cDNA transformants ( WT1 , WT13 , and GFP24 ) restored protein degradation ,	result
+confirming the specificity of Apg5 deficiency ( Fig . 3 B ) .	result
+Cells grown in nutrient-rich medium showed a very low level of basal lysosomal degradation , with no significant difference between APG5+/+ and APG5-/- cells .	result
+These data indicate	implication
+that autophagy is indeed a major route for lysosomal protein degradation .	implication
+In addition , in the KR27 clone , protein degradation was not restored ,	result
+suggesting that Apg12 conjugation of Apg5 is essential for autophagic degradation .	implication
+
+In addition to typical isolation membranes , there were some smaller structures	result
+that were labeled throughout with gold particles ( Fig . 6B and Fig .	result
+C , double arrows , and E and F ) .	result
+These single membrane-bound compartments adopted a crescent shape and were induced by amino acid starvation .	result
+Occasionally , small vesicles were observed inside these compartments .	result
+The curved morphology suggests	implication
+that these structures represent the early stage of the development of isolation membrane .	implication
+
+6 , B and C , show the localization of p42/p44	result
+MAPK after 3 and 5 h of serum stimulation , respectively .	result
+In both cases , MAPKs are clearly accumulated in the nucleus with perhaps a less intense signal at 5 h ( Fig . 6 C ) because of a decline in p42/p44 MAPK activity .	result
+However , the inhibition of protein synthesis with CHX for the last 2 h of serum stimulation markedly accelerated the cytoplasmic return of p42/p44 MAPK ( Fig . 6 , compare C and E ) .	result
+This acceleration of MAPK nuclear efflux was already apparent 1 h after CHX addition ( Fig . 6 D ) .	result
+
+To investigate whether the SDTD motifs might interact with other DDR components , we generated a synthetic peptide	goal
+that corresponded to MDC1 residues 325-340 bearing dual phosphorylation on Ser 329 and Thr 331	method
+This peptide and its unphosphorylated equivalent were coupled to beads and used	method
+to retrieve interacting proteins from HeLa cell nuclear extracts	method
+This approach identified four prominent protein bands on a silver-stained gel	result
+that bound in a phosphorylation-dependent manner ( Fig 1B )	result
+Mass spectrometric analysis identified three of these as MRE11 , RAD50 and NBS1 .	result
+We noted	result
+that control binding assays with the gammaH2AX phospho-peptide retrieved MRN and MDC1 from nuclear extracts , whereas the phosphorylated SDTD peptide bound MRN only ( Fig 1C )	result
+This indicates	implication
+that the phosphorylated MDC1 SDTD peptide does not interact with MRN indirectly by bridging contacts with MDC1	implication
+
+Experimental	none
+requirements to study spatial redistribution of DSB regulators	none
+
+The two migration assays are complementary ,	method
+since each has different limitations	method
+For instance , the wound healing assay is affected by the rates of cell proliferation and by cell-cell adhesive interactions	method
+which restrict the ability of the cells to move into the wounded area	method
+In the chamber assay , differences in cell shape and size may alter the ability of the cells	method
+to pass through the pores	method
+Taken together , the data suggest	implication
+that the loss of PTP-PEST results in motility defects in embryonic fibroblast cell lines that can be reincreased by overexpression of PTP-PEST in the ( -/- ) cells	implication
+
+We purified the Wnt5a protein from cells overexpressing the mouse Wnt5a gene using methods derived from those developed for other members of the Wnt family with	method
+several modifications ( Figure1A ) [ 27 ]	method
+Throughout the purification , we followed the Wnt5a protein	method
+using an antibody that detects Wnt5a on a Western blot	method
+Later steps in the purification were also monitored by activity assays (	method
+see below	method
+To unambiguously identify the purified protein as the product of the Wnt5a gene	goal
+, we determined the amino-terminal sequence .	method
+We found	result
+that the mature protein starts with a sequence IIGAQPLCSQLAGLSQGQKKL , a sequence beginning 62 amino acids downstream from the predicted initiator methionine of Wnt5a and 24 amino acids from the predicted signal cleavage site between amino acids 37 and 38 [ 28 ]	result
+While all Wnt proteins contain signal sequences required for secretion from cells	fact
+, generally they are not internally cleaved at a site downstream from the signal sequence .	fact
+The exception , interestingly , is the Drosophila ortholog of Wnt5a ;	fact
+DWnt5 protein is made as a precursor of more than 1,000 amino acids weighing 140 kDa and cleaved into a smaller mature protein of 80 kDa [ 29 ]	fact
+It is not known	fact
+whether the processing of the Wnt5a molecule involves specific proteases	fact
+
+To determine whether Wnt5a protein inhibits beta-catenin signaling via the direct activation of intracellular Ca 2+ flux downstream of heterotrimeric G proteins	goal
+, 293 cells transiently transfected with the STF reporter were treated with 50 ng/ml W3a protein and increasing doses of Wnt5a protein following 24-h pretreatment with vehicle or 100 ng/ml ( 0.1 muM ) PTX .	method
+Figure 3A shows	result
+that Wnt5a protein-mediated inhibition of the STF reporter was not affected by PTX treatment	result
+The PTX used was active in these cells , as lysophosphatidic acid ( LPA )	result
+treatment of cells following pretreatment with PTX was unable to stimulate the phosphorylation of the mitogen-activated protein	result
+These data are consistent with Topol et al .	result
+s [ 16 ] findings	result
+that overexpression of a dominant negative version of CamKII , and treatment of cells with a specific inhibitor of CamKII , does not perturb Wnt5a-mediated inhibition of Wnt/beta-catenin signaling in 293 cells	result
+
+As an additional approach , murine BMMs obtained from SHIP +/+ and SHIP -/- mice were transiently transfected with the NFkappaB-luciferase construct .	method
+Transfection of BMMs using the amaxa Nucleofector ( Solution T , program T-20 ; amaxa biosystems , Cologne , Germany ) yielded comparable transfection efficiency for both SHIP+/+ and SHIP-/- cells ,	result
+as determined with plasmid encoding EGFP ( enhanced green fluorescent protein ; unpublished data ) .	result
+Transfected BMMs were subsequently infected with F. novicida and assayed for luciferase activity .	method
+BMMs lacking SHIP displayed significantly higher levels ( p < 0.05 ) of luciferase activity than the SHIP+/+ BMMs ,	result
+indicating that SHIP negatively regulates F. novicida-induced activation of NFkappaB ( Figure 7C ) .	implication
+
+We have previously shown that E3b1 binds to the proline-rich, COOH-terminal tail of Sos-1 (aa 1131-1333) (Scita et al., 1999),	result
+which also binds to the SH3 of Grb2 (Li et al., 1993; Cussac et al., 1994)	result
+Thus, Grb2 and E3b1 might compete for binding to Sos-1.	hypothesis
+This hypothesis was validated by a series of experiments performed both in vitro and in vivo.	implication
+We could demonstrate that (a) the SH3 of Grb2, but not of Eps8, efficiently competed with the SH3 of E3b1 for binding to the proline-rich COOH-terminal tail of Sos-1 in vitro (Fig. 2 B); (b) the Sos-1 peptide VPVPPPVPPRRR, known to constitute a Grb2-SH3 binding site (Li et al.,	result
+1993; Cussac et al., 1994), competed equally well the binding of the COOH-terminal tail of Sos-1 to the SH3s of Grb2 or E3b1 (Fig. 2 C); (c) the binding constants of the interaction between the proline rich COOH-terminal tail of Sos-1 and the SH3 domains of Grb2 and E3b1 were very similar (Fig. 2 D); (d) overexpression of Grb2 abolished the ability of GST-E3b1 to bind to native Sos-1 (Fig. 3 A); and (e) overexpression of E3b1 significantly decreased the coimmunoprecipitation between Grb2 and Sos-1 (Fig. 3 B).	result
+Thus, Sos-1 binds either E3b1 or Grb2, in a mutually exclusive fashion,	implication
+suggesting that two distinct pools of Sos-1 exist in the cells.	hypothesis
+
+To determine which PTKs may phosphorylate PAG in vivo	goal
+, COS cells were cotransfected with cDNAs encoding FLAG-tagged PAG and various PTKs .	method
+As shown in Fig . 4 B	result
+, PAG serves as a substrate for Lck and Fyn but not for ZAP70 and/or Syk .	result
+In Jurkat T cells , tyrosine phosphorylation of PAG was absent in the Lck-negative Jurkat mutant J.CaM1.6 but was normal or even enhanced in the ZAP70/Syk-negative mutant P116 ( Fig . 4 C ) ,	result
+indicating that Lck might be primarily responsible for PAG phosphorylation in T cells .	implication
+However ,	result
+when wild-type Jurkat T cells ( or Raji cells , not shown ) were briefly treated with the Src family PTK-specific inhibitor PP1	result
+, the constitutive tyrosine phosphorylation of PAG was lost ( Fig . 4 D ) .	result
+This strongly suggests	implication
+that the phosphorylation status of PAG is controlled by balanced activities of Src kinases ( likely Lck ) and an as yet unidentified tyrosine phosphatase ( s ) .	implication
+
+One possible explanation for the observed abrogation of reporter activation is	hypothesis
+that Wnt5a protein competes with Wnt3a for Fz receptor binding sites	hypothesis
+Alternatively , Wnt5a has been proposed	hypothesis
+to inhibit canonical Wnt signaling via upregulation of Siah-2 , which targets beta-catenin for betaTrCP-independent proteasomal degradation [ 16 ]	hypothesis
+In both of these models , beta-catenin protein levels should be reduced following concomitant Wnt5a treatment compared to Wnt3a protein treatment alone ;	hypothesis
+in the former case , signal transduction is blocked at the level of the receptor , whereas in the latter , any beta-catenin protein stabilized due to Wnt3a signal activation should be appreciably degraded by the opposing effects of Wnt5a	hypothesis
+
+The inositol phosphatase SHIP plays an important role in	fact
+regulating macrophage innate immune responses to IgG immune complexes and bacterial products [ 16,24-29 ] .	fact
+Recent studies have indicated	result
+that while SHIP negatively regulates TLR2 function [ 30 ] , it promotes TLR4 function [ 16,27,29 ] .	result
+SHIP is a constitutively active , cytoplasmic enzyme	fact
+that must translocate to the membrane where it accesses its substrate PI3,4,5P3 .	fact
+Membrane translocation of SHIP is accompanied by tyrosine phosphorylation of SHIP by membrane-associated Src kinases .	fact
+Thus , tyrosine phosphorylation of SHIP is often used as an indicator of SHIP translocation to the membrane [ 16 ] .	fact
+To address the role of SHIP in F.	goal
+novicida-stimulated host cell response , RAW 264.7 murine macrophage cells were infected with F. novicida .	method
+SHIP proteins were immunoprecipitated from uninfected and infected cells , and analyzed by Western blotting with phosphotyrosine antibody ( Figure 1A , upper panel ) .	method
+The same membrane was reprobed with SHIP antibody (	method
+lower panel	method
+) .	method
+Results indicate	result
+that SHIP is tyrosine phosphorylated in cells infected with F. novicida , and that robust phosphorylation of SHIP occurs at the later time points ( 30 and 60 min post infection ) .	result
+Having determined the time course of SHIP phosphorylation in RAW 264.7 cells	method
+, we next tested whether these findings could be validated in primary cells .	method
+Here murine bone marrow-derived macrophages ( BMMs ) were infected with F. novicida for varying times , and	method
+phosphorylation of SHIP was analyzed by Western blotting with a phospho-specific SHIP antibody ( Figure 1B , upper panel ) .	method
+Results indicated	result
+that infection of BMMs by F. novicida induces tyrosine phosphorylation of SHIP ( Figure 1B ) .	result
+To ensure equal loading of protein in all lanes	goal
+, the same membrane was reprobed with anti-SHIP antibody .	method
+These results suggest a potential involvement of SHIP in F. novicida-induced macrophage signaling .	implication
+
+Sos1 functions as a ras-specific GEF when bound to grb2 and as a rac1-specific GEF when it is part of the sos1-eps8-e3b1 complex.	fact
+We therefore examined the role of p66shc in regulating the formation of these sos1-containing complexes.	goal
+The amount of sos1 associated with eps8 was significantly greater in p66shc +/+ than in -/- MEF (Fig. 2 A).	result
+Conversely, the amount of sos1 bound to grb2 was appreciably less in p66shc +/+ MEF than in -/- cells (Fig. 2 B).	result
+A similar inverse relationship between p66shc expression and grb2-sos1 binding was observed in human embryonic kidney (HEK) 293 cells (Fig. 2 C).	result
+Reconstitution of p66shcWT in p66shc -/- MEF increased sos1 associated with eps8 (Fig. 2 A) while decreasing sos1 bound to grb2 (Fig. 2 B).	result
+In contrast, p66shcCH2 and -P47A/P50A led to little or no change in the amounts of grb2 and eps8 bound sos1 (Figs. 2, A and B).	result
+Thus, full-length p66shc, via prolines 47 and 50, promotes dissociation of sos1 from grb2 in vivo and increases the formation of the sos1-eps8-e3b1 complex.	implication
+
+We next assayed	goal
+whether mRor2 was carrying out its inhibitory function through direct binding to Wnt5a	goal
+Two variants of the extracellular cysteine-rich Wnt binding domain ( CRD ) of mRor2 were cloned in frame amino-terminal to an immunoglobulin heavy chain domain ( IgG )	method
+One variant is comprised of the Ror2 CRD alone cloned downstream of an exogenous signal sequence ( Ror2 CRD-IgG ) ;	method
+the other variant utilizes the endogenous Ror2 signal sequence and possesses the full amino terminus of the Ror2 protein ending at the carboxyl terminus of the CRD ( Ror2 NT CRD-IgG )	method
+The secreted mRor2 CRD-IgG fusion proteins were then purified from conditioned media , bound	method
+to protein A beads	method
+The Smoothened receptor is a Fz family member that possesses a CRD domain but ,	fact
+rather than playing a role in Wnt signaling , it functions exclusively Hedgehog signal transmission	fact
+As a negative control , purified Smoothened ( Smo ) CRD-IgG protein was also bound to beads and assayed for Wnt binding .	method
+that Wnt5a protein specifically binds to the purified Ror2 and Fz4 CRD domains , whereas only background binding to the Smoothened CRD occurs	result
+Wnt3a protein shows specific binding only to the Fz4 CRD-IgG protein ( unpublished data ) .	result
+
+A central signaling event involved in TLR-mediated gene induction is activation of IKK and its downstream transcription factor NF-kappaB 2 .	fact
+To investigate the function of Peli1 in this process , we examined the effect of Peli1 deficiency on	goal
+TLR-stimulated activation of IKK and NF-kappaB using different cell types	method
+Consistent with the gene induction studies ( Fig . 2,3 ) , poly ( I : C ) -stimulated NF-kappaB activation was severely attenuated in Peli1-/- MEFs ( Fig . 4a ) .	result
+The Peli1 deficient MEFs also showed a partial inhibition of NF-kappaB activation by LPS ( Fig . 4a ) .	result
+Parallel kinase assays revealed that Peli1 deficiency largely impaired poly ( I : C ) -stimulated activation of IKK and also partially inhibited the LPS-stimulated activation of IKK ( Fig . 4b ) .	result
+Since TLR4 activates IKK through both MyD88- and TRIF-dependent pathways , whereas TLR3 activates IKK exclusively through TRIF 2	fact
+, these results suggest that Peli1 plays a non-redundant role in promoting IKK activation in the TRIF-dependent TLR pathway .	result
+
+A role for the PI3K/Akt pathway in macrophage response to F. novicida infection has thus far not been described .	problem
+The above observations of enhanced cytokine production and enhanced activation of Akt in SHIP-/- BMMs suggest a potential role for the PI3K/Akt pathway in F. novicida-induced inflammatory response .	hypothesis
+To test this notion , we next treated	goal
+F. novicida infected cells with the pharmacologic inhibitor of PI3K LY294002 , and monitored the release of IL-12 , IL-6 , and RANTES by ELISA .	method
+The results are displayed in Figure 5 .	result
+Inhibition of the PI3K pathway significantly decreased the production of IL-12 ( p < 0.009 ) , IL-6 ( p < 0.003 ) , and RANTES ( p < 0.03 ) by F. novicida-infected BMMs ,	result
+indicating that the PI3K pathway is involved in the production of pro-inflammatory mediators in response to F. novicida infection .	implication
+
+Quantitative RT-PCR analysis was performed	method
+to ascertain the expression of Ror2 in 293 and L cells	goal
+A specific Ror2 transcript in the L cell sample did not emerge until after 40 cycles of amplification ,	result
+indicating that Ror2 is expressed in almost immeasurably low abundance in L cells	implication
+Quantification of the real-time data revealed	result
+that Ror2 transcripts were over 700 times more abundant in 293 cells than in L cells ( Figure 6C )	result
+mRor2 expression thus appears	implication
+to be required for Wnt5a-mediated inhibition of Wnt/beta-catenin signaling in mouse L cells	implication
+
+We next utilized	method
+When transiently transfected into 293 cells in conjunction with the STF reporter	result
+, mRor2DeltaCRD does not enhance Wnt5a-mediated inhibition of the STF reporter ( Figure 5C ) .	result
+Thus , the CRD domain binds directly to Wnt5a and is required for Ror2	implication
+to transduce Wnt5a 's inhibitory activity	implication
+
+Although stimulation of VEGFR-2 in endothelial cells is known to promote activation of Src kinases [15]	fact
+and Src activation is linked to endothelial cell permeability, survival and angiogenesis [16], [17	implication
+[16], [17], the nature of its association with VEGFR-2, in particular, the putative phospho-tyrosine residue on VEGFR-2 involved in its recruitment is not.	problem
+Our survey of several primary endothelial cells including, HUVEC, HMVE and BAEC cells	method
+showed that c-Src is ubiquitously tyrosine phosphorylated in response to VEGF stimulation (Figure 1A) and associates with VEGFR-2 in a ligand-dependent manner in these primary endothelial cells (Figure 1C).	implication
+Cell lysates obtained from HEK-293 (human embryonic kidney-293) cells	method
+which do not express VEGFR-2	fact
+was negative for VEGFR-2	result
+and was used as a negative control (Figure 1C).	method
+The cytoplasmic region of VEGFR-2 contains multiple tyrosine phosphorylation sites [18], albeit none of these tyrosine autophosphorylation sites shows obvious sequence similarities to the preferred Src SH2 recognition motif, pYEEI [19].	fact
+To analyze association of c-Src with VEGFR-2	goal
+we utilized the previously characterized VEGFR-2 chimera [20]	method
+herein called CKR	fact
+which is created by replacing the extracellular domain of VEGFR-2 with that of human Colony stimulating factor-1 receptor (CSF1R) and expressed in PAE (porcine aortic endothelial) cells as an experimental system.	method
+In our previous studies we have extensively characterized CKR with VEGFR-2 in a comparative manner.	method
+CKR in term of its ability undergo down-regulation, activation, recruitment of signaling proteins and to stimulate cellular responses is identical to VEGFR-2 [3], [14], [20], [21] and data presented in this manuscript.	fact
+We used this strategy to avoid cross-talk between VEGFR-2 and other VEGF receptors, in particular, VEGFR-1.	method
+Our initial observation demonstrated that mutation of tyrosines 799, 820, 925 to phenylalanine (F) and deletion of C-terminus of VEGFR-2 coupled with mutation of tyrosines 1173 and 1212 has no effect on the ability of VEGFR-2 to associate with the SH2 domain of c-Src (Figure 1E).	result
+In contrast, mutation of Y1052 to glutamic acid (E) and particularly Y1057, located in the kinase domain, severely reduced the binding of VEGFR-2 with SH2 domain of c-Src (Figure 1G).	result
+GST alone does not associate with CKR (Figure S3).	fact
+Consistent with its reduced binding capability to E1052,	fact
+the result showed that E1052 only partially reduces the ability of VEGFR-2 to phosphorylate c-Src (Figure 1I).	implication
+In contrast, the potential of mutant Y1057 (E1057/CKR) to stimulate Src tyrosine phosphorylation was severely compromised and was near to undetectable (Figure 1I).	result
+Since both	fact
+Y1052 and Y1057 are located in the kinase domain	fact
+we replaced these residues to glutamic acid (E) rather than phenylalanine (F).	method
+This type of mutations has been suggested to be useful for characterization of sensitive tyrosine sites on the RTKs (receptor tyrosine kinases) when their mutation to phenylalanine interferes with receptor activation [15].	hypothesis
+However, unlike these RTKs, single mutation of Y1052 and Y1057 either to E or F did not interfere with activation of VEGFR-2 in the context of CKR (Figures S1 and S2).	result
+Furthermore, to make sure that our observation in CKR also is true in the context of non-chimeric VEGFR-2,	goal
+we mutated Y1057 to F in the full length VEGFR-2, expressed in PAE cells and similarly analyzed for its ability to bind SH2 domain of c-Src.	method
+The result showed that VEGFR-2 associates with SH2-Src in VEGF-dependent manner and mutation of Y1057 inhibited association of VEGFR-2 with c-Src (Figure 1K).	result
+Altogether, the data show that Y1057 of VEGFR-2 is a major c-Src binding site on VEGFR-2 and its presence is critically required for VEGFR-2 to activate c-Src.	implication
+
+For a total of 25 phosphotyrosines , a single interaction partner was found , and	result
+for 13 additional tyrosine residues , we found more than one interacting protein ( Table I )	result
+Not surprisingly , 49 out of the 89 investigated	result
+tyrosine residues did not have an interaction partner to their phosphorylated form	result
+Most of the tyrosine residues without interaction partners are located in and around the kinase domain ,	result
+whereas the residues that interacted with specific partners accumulated at the C-terminal regions of the receptors	result
+Strikingly , all binding partners with a significant ratio in our assay had either an SH2 or a PTB domain .	result
+
+We next counterstained endogenous LC3	method
+to use as a specific marker for autophagosome .	goal
+LC3 is a mammalian homologue of Aut7/Apg8 ( Lang et al . 1998 ; Kirisako et al . 1999 ) and is the only mammalian protein	fact
+that has been identified to localize to the autophagosome membrane as well as to the cytosol ( Kabeya et al . 2000 ) .	fact
+In cells grown in complete medium , LC3 was stained as a cytoplasmic pattern with very fine punctate structures throughout the cytoplasm ( Fig . 5 B ) ,	result
+as reported previously	result
+( Kabeya et al . 2000 ) .	result
+Amino acid starvation induced large dots of LC3 staining ,	result
+which could represent autophagic vacuoles ( Fig . 5 C ) .	hypothesis
+In the starved cells , GFP-Apg5 well colocalized with LC3 structures ( Fig . 5 , C-G ) ,	result
+although some GFP-Apg5 spots were very weak for LC3 staining ( Fig . 5F and Fig .	result
+On the other hand , there were many spots	result
+that were positive for LC3 staining but negative for GFP-Apg5 .	result
+The colocalization of Apg5 with part of LC3 suggests	result
+that Apg12-Apg5 is targeted to certain restricted structures in the autophagic pathway .	implication
+
+To directly examine the role of Peli1 in IL-1R signaling	goal
+, we analyzed the effect of Peli1 deficiency on IL-1beta-stimuated activation of NF-kappaB and IKK .	method
+IL-1beta stimulated comparable NF-kappaB DNA-binding activity in Peli1+/+ and Peli1-/- MEFs ( Fig . 5c ) .	result
+Consistently , the loss of Peli1 did not affect IL-1beta-stimulated activation of IKK ( Fig . 5d ) .	result
+Together , these results suggest	implication
+that Peli1 is either functionally redundant with other Peli proteins or not critical in the IL-1R signaling pathway	implication
+As IL-1R transduces signals through MyD88 35	fact
+, these results are consistent with the dispensable role of Peli1 in IKK-NF-kappaB activation by the MyD88-dependent TLR2 and TLR9 ( Fig . 4c , e ) .	result
+
+Rag and TSC1/2 function independently and in parallel	none
+to promote TORC1 signaling	none
+
+We next examined the role of Peli1 in the activation of NF-kappaB in B cells .	method
+As seen in MEFs	result
+, the Peli1 deficiency markedly inhibited poly ( I : C ) -stimulated activation of NF-kappaB ( Fig . 4c ) and IKK ( Fig . 4d ) .	result
+The loss of Peli1 also partially inhibited LPS-stimulated NF-kappaB activation .	result
+However , Peli1 was largely dispensable for	result
+NF-kappaB activation by CpG and anti-IgM ( Fig . 4c )	result
+A similar result was obtained in splenocytes ,	result
+in which Peli1 was required for IKK activation by poly ( I : C ) but not by other TLR ligands ( Fig . 4e )	result
+Notably , the effect of Peli1 deficiency on LPS-stimulated IKK activation was not appreciable in splenocytes .	result
+These results further suggest a role for Peli1 in	implication
+mediating IKK-NF-kappaB activation by the TRIF-dependent TLRs , particularly TLR3	implication
+
+To investigate the function of endogenous dRag	goal
+, we identified a P element insertion in the 5 ' untranslated region of the dRagC gene .	method
+Animals homozygous	result
+for this insertion were found to arrest growth at the early third instar larval stage , similar to the growth arrest observed in Tor loss of function mutants36 , and could be restored to viability upon mobilization of the P element ( data not shown )	result
+In the larval fat body , clones of cells homozygous for this dRagC mutation showed a statistically significant reduction in cell size under fed but not starved conditions ( Fig . 4c , d ) ,	result
+highlighting a requirement for endogenous dRagC in cell growth regulation and nutrient response	implication
+
+Past studies in zebrafish and Xenopus embryos have suggested that overexpression of Wnt5a can trigger intracellular Ca 2+ flux ,	result
+leading to the activation of Ca 2+-dependent effector molecules such as CamKII [ 9 , 34 , 35 ]	result
+It has been proposed that active CamKII protein	hypothesis
+can then initiate the mammalian TGF-beta-activated kinase	hypothesis
+This phosphorylation of TCF/LEF prevents the beta-catenin-TCF/LEF transcriptional complex from binding to DNA [ 17 , 18 , 36 ] .	result
+In this model , inhibition of Wnt/beta-catenin signaling due	none
+to Wnt5a-stimulated Ca 2+ flux	none
+In a variety of organisms and assays , Ca 2+ signaling induced by Wnts has consistently been shown	fact
+to be PTX sensitive , as the Fz receptor described as transmitting the inhibitory Wnt signal ( RFz2 )	fact
+
+We next tested	hypothesis
+whether increased mRor2 expression was necessary to shift the balance of Wnt5a-mediated activation versus inhibition of Wnt/beta-catenin signaling in cells overexpressing mFz4	hypothesis
+293 and 293Fz4 cells were transiently transfected with the STF reporter and mRor2 and then treated with the indicated Wnt proteins .	method
+Figure 6A shows	result
+that Wnt5a-induced reporter activation in the presence of mFz4 and LRP5 is abrogated when mRor2 is expressed	result
+In addition ,	result
+while Wnt5a protein is unable to inhibit Wnt/beta-catenin signaling in the presence of mFz4 , as compared to parental 293 cells	result
+Once again , inhibition of Wnt3a-mediated reporter activation was observed only in the presence of Wnt5a ;	result
+mRor2 expression alone did not reduce Wnt3a-mediated reporter activation , indicating that the inhibitory activity is dependent on the presence of Wnt5a	result
+
+Past studies in zebrafish and Xenopus embryos have suggested that overexpression of Wnt5a can trigger intracellular Ca 2+ flux ,	hypothesis
+leading to the activation of Ca 2+-dependent effector molecules such as CamKII [ 9 , 34 , 35 ]	hypothesis
+It has been proposed that active CamKII protein	hypothesis
+can then initiate the mammalian TGF-beta-activated kinase	hypothesis
+This phosphorylation of TCF/LEF prevents the beta-catenin-TCF/LEF transcriptional complex from binding to DNA [ 17 , 18 , 36 ] .	fact
+In this model , inhibition of Wnt/beta-catenin signaling due	result
+to Wnt5a-stimulated Ca 2+ flux	result
+In a variety of organisms and assays , Ca 2+ signaling induced by Wnts has consistently been shown	result
+to be PTX sensitive , as the Fz receptor described as transmitting the inhibitory Wnt signal ( RFz2 )	result
+
+We next tested	hypothesis
+whether Wnt5a could activate the STF reporter in 293Fz4 cells	hypothesis
+Neither Wnt5a protein treatment at high doses nor transfection of Wnt5a DNA into cells expressing mFz4 could activate the STF reporter .	result
+shown in Figure 4B , when LRP5 is coexpressed with mFz4	result
+Thus , Wnt5a can activate TCF/beta-catenin signaling given the expression of the appropriate receptors .	implication
+Interestingly , Wnt5a is unable	result
+to activate the STF reporter in 293Fz4 cells transiently transfected with LRP6 , indicating the specificity of the Wnt5a/Fz4/LRP5 signaling complex ( unpublished data )	result
+
+This hyperphosphorylation of p130CAS , paxillin , and FAK is constitutive ,	fact
+meaning the cells were not stimulated with growth factors or extracellular ligands	fact
+Also , cell spreading was associated with paxillin tyrosine phosphorylation ( Richardson et al. , 1997 ) .	result
+Finally , overexpression of PTP1B , a PTP	none
+for which p130CAS is a substrate ( Liu et al. , 1996 )	none
+These facts led	goal
+us to investigate whether the PTP-PEST ( -/- ) cells could be , on the contrary , more prone to attach on fibronectin since p130CAS , paxillin , and FAK are already hyperphosphorylated	goal
+Normally growing cells were trypsinized and plated on fibronectin-coated tissue culture plates .	method
+After 10 , 15 , and 30 min , random fields were photographed and	method
+the cells were counted for the extent of cell spreading	method
+The results of two independent experiments with different populations of the two same PTP-PEST ( -/- ) and ( +/- ) clones	method
+that were tested in the preceding experiments	method
+After 10 min , more PTP-PEST ( -/- ) are opaque ,	result
+which is a characteristic of spread cells under phase-contrast microscopy ( Fig . 5 , a and b )	result
+Photographs of fields after 30 min ( Fig . 5 , c and d ) as well as a quantitative curve of the spreading time course ( Fig . 5 e ) are also shown .	result
+
+Wnt5a protein was also assayed for its ability	method
+to directly stimulate intracellular calcium flux	method
+Figure 3C shows	result
+that Wnt5a protein treatment at high doses does not alter the intracellular concentration of Ca 2+ in 293 cells , although subsequent ionomycin treatment of the same cells promotes robust Ca 2+ flux	result
+Similar results were observed in 293 cells stably expressing mouse Fz4 ( mFz4 ) ;	result
+a Wnt receptor thought to be involved in Wnt-stimulated calcium flux ( Figure 3C ) [ 40 ]	implication
+In addition , transient treatment with Wnt5a protein does not activate other Ca 2+-sensitive reporter constructs such as an NFAT-responsive luciferase reporter ( unpublished data ) .	result
+These data taken together strongly suggest	implication
+that Wnt-stimulated Ca 2+ flux is not the direct mechanism utilized by Wnt5a to inhibit canonical Wnt signaling	implication
+
+Rac1 is usually localized primarily in the cytosol as a result of its association to RhoGDI.	fact
+However, activated Rac1 translocates to the plasma membrane in an integrin-dependent fashion (del Pozo et al., 2000).	fact
+In polarized cells, Rac1 activity has been found in the leading edge, which is in line with its function in actin polymerization, cell protrusion, and motility (Kraynov et al., 2000; Ridley et al., 2003).	fact
+Given the fact that beta-Pix binds Rac1 and, thus, may drive local Rac1 activation,	fact
+we analyzed beta-Pix localization in polarized cells.	method
+For these experiments, we cultured NIH3T3 cells on fibronectin-coated coverslips for 18 h.	method
+Cells were fixed and immunostained for endogenous beta-Pix and for paxillin,	method
+a marker for FAs.	fact
+We found that although paxillin is found in FAs both in the leading edge as well as in the contracting rear of polarized cells, beta-Pix is concentrated in FAs in the leading edge and is virtually absent from the paxillin-positive FAs in the cell body or in the rear of the cell (Fig. 2 G).	result
+These data suggest that the differential localization of beta-Pix in polarized cells drives localized activation of Rac1.	implication
+
+Activation of the p42/p44 MAPK Signaling Pathway Is	result
+Sufficient to Promote the Nuclear Translocation of p42/p44 MAPK	result
+

@@ -6,9 +6,12 @@ import argparse
 import theano
 import json
 import pandas as pd
-
+import csv
+import itertools
+import os
 from rep_reader import RepReader
-from util import read_passages, evaluate, make_folds
+from util import read_passages, evaluate, make_folds, read_passages_from_tsv
+from sets import Set
 
 from keras.models import Sequential, Graph, model_from_json
 from keras.layers.core import TimeDistributedDense, Dropout
@@ -17,8 +20,9 @@ from keras.callbacks import EarlyStopping
 
 from attention import TensorAttention
 from keras_extensions import HigherOrderTimeDistributedDense
+import psutil
 
-class PassageTagger(object):
+class PassageTagger_tsv(object):
     def __init__(self, word_rep_file=None, pickled_rep_reader=None):
         if pickled_rep_reader:
             self.rep_reader = pickled_rep_reader
@@ -29,11 +33,11 @@ class PassageTagger(object):
         self.input_size = self.rep_reader.rep_shape[0]
         self.tagger = None
 
-    def make_data(self, clauses, use_attention, maxseqlen=None, maxclauselen=None, label_ind=None, train=False):
+    def make_data(self, clauses, use_attention, maxseqlen=None, maxclauselen=None, label_ind=None, train=False, sec='w'):
         print >>sys.stderr, "Reading data.."
         
-        str_seqs, label_seqs = read_passages(clauses, is_labeled = train)
-        
+        str_seqs, label_seqs = read_passages_from_tsv(clauses,sec=sec)
+                
         print >>sys.stderr, "Sample data for train:" if train else "Sample data for test:"
         print >>sys.stderr, zip(str_seqs[0], label_seqs[0])
         if not label_ind:
@@ -55,8 +59,11 @@ class PassageTagger(object):
         #init_word_rep_len = len(self.rep_reader.word_rep)
         all_word_types = set([])
         for str_seq, label_seq in zip(str_seqs, label_seqs):
-            for label in label_seq:
+            for i, label in enumerate(label_seq):
                 if label not in self.label_ind:
+                    if(label != label):
+                        raise Exception('Found NaN in label for clause: ' + str_seq[i] )
+                    print "%d: %s" % (len(self.label_ind), label)
                     self.label_ind[label] = len(self.label_ind)
             if use_attention:
                 x = numpy.zeros((maxseqlen, maxclauselen, self.input_size))
@@ -84,6 +91,8 @@ class PassageTagger(object):
                 Y_inds.append(y_ind)
             else:
                 for i, clause in enumerate(str_seq):
+                    if(clause != clause):
+                        clause = "none"
                     clause_rep = self.rep_reader.get_clause_rep(clause)
                     for word in clause.split():
                         all_word_types.add(word)
@@ -94,14 +103,16 @@ class PassageTagger(object):
                     else:
                         x[-seq_len+i] = numpy.mean(clause_rep, axis=0)
                 X.append(x)
-        final_word_rep_len = len(self.rep_reader.word_rep)
+        #final_word_rep_len = len(self.rep_reader.word_rep)
         #oov_ratio = float(final_word_rep_len - init_word_rep_len)/len(all_word_types)
         #print >>sys.stderr, "OOV ratio: %f" % oov_ratio
-        for y_ind in Y_inds:
+        process = psutil.Process(os.getpid())
+        for j,y_ind in enumerate(Y_inds):
             y = numpy.zeros((maxseqlen, len(self.label_ind)))
             for i, y_ind_i in enumerate(y_ind):
-                y[i][y_ind_i] = 1
+                y[i][int(y_ind_i)] = 1
             Y.append(y) 
+            #print "%d/%d" % (j, len(Y_inds))
         self.rev_label_ind = {i: l for (l, i) in self.label_ind.items()}
         return seq_lengths, numpy.asarray(X), numpy.asarray(Y)
 
@@ -135,7 +146,7 @@ class PassageTagger(object):
                         break
                 x_lens.append(x_len)
         else:
-                x_lens = test_seq_lengths
+            x_lens = test_seq_lengths
         if bidirectional:
             pred_probs = tagger.predict({'input':X})['output']
         else:
@@ -237,9 +248,11 @@ class PassageTagger(object):
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser(description="Train, cross-validate and run LSTM discourse tagger")
     argparser.add_argument('--repfile', type=str, help="Gzipped word embedding file")
-    argparser.add_argument('--train_file', type=str, help="Training file. One clause<tab>label per line and passages separated by blank lines.")
+    argparser.add_argument('--train_dir', type=str, help="Training Directory. TSV Files with Discourse Types set.")
     argparser.add_argument('--cv', help="Do cross validation", action='store_true')
-    argparser.add_argument('--test_files', metavar="TESTFILE", type=str, nargs='+', help="Test file name(s), separated by space. One clause per line and passages separated by blank lines.")
+    argparser.add_argument('--test_dir', metavar="TESTFILE", type=str,help="Directory of test file name(s), TSV-formatted.")
+    argparser.add_argument('--out_dir', type=str, help="Output Directory.")
+    argparser.add_argument('--paper_section', type=str, help="Which Section? [w]hole, ex_[m]eth, [r]esults_only)")
     argparser.add_argument('--use_attention', help="Use attention over words? Or else will average their representations", action='store_true')
     argparser.add_argument('--att_context', type=str, help="Context to look at for determining attention (word/clause)")
     argparser.set_defaults(att_context='word')
@@ -247,22 +260,52 @@ if __name__ == "__main__":
     argparser.add_argument('--show_attention', help="When testing, if using attention, also print the weights", action='store_true')
     args = argparser.parse_args()
     repfile = args.repfile
-    if args.train_file:
-        trainfile = args.train_file
-        train = True
-        #assert args.repfile is not None, "Word embedding file required for training."
-        if args.repfile is not None:
-            print  "Word embedding file missing, using elastic index."
 
+    if args.paper_section:
+        sec = args.paper_section
+    else: 
+        sec = "w"
+    
+    out_dir = ''
+    if args.out_dir:
+        out_dir = args.out_dir + "/"
+
+    if args.train_dir:
+        train = True
     else:
         train = False
-    if args.test_files:
-        testfiles = args.test_files
+
+    errors = False
+    if args.test_dir:
+        testfiles = []
+        for root, dirs, files in os.walk(args.test_dir):
+            for testfile in files:
+                if os.path.isfile(os.path.join(root, testfile)) and testfile[-4:]=='.tsv' :
+                    try:
+                        tsv = pd.read_csv(os.path.join(root, testfile), sep='\t', quoting=csv.QUOTE_NONE, encoding='utf-8')
+                    except:
+                        e = sys.exc_info()[0]
+                        print "Error: %s in %s" % (e, testfile)
+
+                    for i,row in tsv.iterrows():
+                        p = row['Paragraph']
+                        c = row['Clause Text']
+                        d = row['Discourse Type']
+                        if( p!=p or c!=c or d!=d):
+                            raise Exception('Error in ' + testfile + ' Headings ')
+                        break
+                    testfiles.append(os.path.join(root, testfile))
+
         test = True
     else:
         test = False
+
+    #    if errors:
+    #        raise RuntimeError, "Error in TSV files"
+
     if not train and not test:
         raise RuntimeError, "Please specify a train file or test files."
+    
     use_attention = args.use_attention
     att_context = args.att_context
     bid = args.bidirectional
@@ -271,27 +314,36 @@ if __name__ == "__main__":
     if train:
         # First returned value is sequence lengths (without padding)
         #nnt = PassageTagger(word_rep_file=repfile)
-        nnt = PassageTagger()
-        
-        clauses = codecs.open(trainfile, "r", "utf-8")
-        _, X, Y = nnt.make_data(clauses, 
-                                use_attention, 
-                                train=True)
+        if args.repfile is None:
+            nnt = PassageTagger_tsv()
+        else:
+            nnt = PassageTagger_tsv(word_rep_file=repfile)
+
+        clauses = []
+        for root, dirs, files in os.walk(args.train_dir):
+            for trainfile in files:
+                if os.path.isfile(os.path.join(root, trainfile)) and trainfile[-4:]=='.tsv' :
+                    print("reading data from " + os.path.join(root, trainfile))
+                    tsv = pd.read_csv(os.path.join(root, trainfile), sep='\t',quoting=csv.QUOTE_NONE, encoding='utf-8')
+                    for i,row in tsv.iterrows():
+                        clauses.append(row)
+        _, X, Y = nnt.make_data(clauses, use_attention, train=True, sec=sec)
         nnt.train(X, Y, use_attention, att_context, bid, cv=args.cv)
+        
     if test:
         if train:
             label_ind = nnt.label_ind
         else:
-            # Load the model from file
+            # Load the model from files
             model_ext = "att=%s_cont=%s_bi=%s"%(str(use_attention), att_context, str(bid))
-            model_config_file = open("model_%s_config.json"%model_ext, "r")
-            model_weights_file_name = "model_%s_weights"%model_ext
-            model_label_ind = "model_%s_label_ind.json"%model_ext
-            model_rep_reader = "model_%s_rep_reader.pkl"%model_ext
-            #rep_reader = pickle.load(open(model_rep_reader, "rb"))
-            #print >>sys.stderr, "Loaded pickled rep reader"
-            #nnt = PassageTagger(pickled_rep_reader=rep_reader)
-            nnt = PassageTagger()
+            model_config_file = open("models/model_%s_config.json"%model_ext, "r")
+            model_weights_file_name = "models/model_%s_weights"%model_ext
+            model_label_ind = "models/model_%s_label_ind.json"%model_ext
+            if args.repfile is None:
+                nnt = PassageTagger_tsv()
+            else:
+                nnt = PassageTagger_tsv(word_rep_file=args.repfile)
+
             nnt.tagger = model_from_json(model_config_file.read(), custom_objects={"TensorAttention":TensorAttention, "HigherOrderTimeDistributedDense":HigherOrderTimeDistributedDense})
             print >>sys.stderr, "Loaded model:"
             print >>sys.stderr, nnt.tagger.summary()
@@ -311,32 +363,117 @@ if __name__ == "__main__":
                     maxseqlen, maxclauselen = l.td1, l.td2
                     break
                 
+        all_actual_labels = []
+        for test_file in testfiles:
+            print test_file
+            tsv = pd.read_csv(test_file, sep='\t',quoting=csv.QUOTE_NONE, encoding='utf-8')
+            clauses = []
+            for i,row in tsv.iterrows():
+                clauses.append(row)
+            str_seqs, label_seqs = read_passages_from_tsv(clauses)
+            for l in list(itertools.chain(*label_seqs)):
+                if l not in all_actual_labels:
+                    all_actual_labels.append(l)
+
+        conf_matrix = {}        
+        f_score_counts = {}        
+        for l in all_actual_labels:
+            f_score_counts[l] = {}
+            f_score_counts.get(l)['tp'] = 0
+            f_score_counts.get(l)['tn'] = 0
+            f_score_counts.get(l)['fp'] = 0
+            f_score_counts.get(l)['fn'] = 0
+            conf_matrix[l] = {}
+            for ll in all_actual_labels:
+                conf_matrix[l][ll] = 0
+                
         for test_file in testfiles:
 
             print >>sys.stderr, "Predicting on file %s"%(test_file)
-            test_out_file_name = test_file.split("/")[-1].replace(".txt", "")+"_att=%s_cont=%s_bid=%s"%(str(use_attention), att_context, str(bid))+".out"    
-            outfile = open(test_out_file_name, "w")
+            test_out_file_name = test_file.split("/")[-1].replace(".tsv", "")+"_att=%s_cont=%s_bid=%s"%(str(use_attention), att_context, str(bid))+".tsv"
+            print >> sys.stderr, "Outputting to file %s" % (test_out_file_name)
+
+            outfile = open(out_dir + test_out_file_name, "w")
             
-            clauses = codecs.open(test_file, "r", "utf-8")
+            tsv = pd.read_csv(test_file, sep='\t', quoting=csv.QUOTE_NONE, encoding='utf-8')
+            clauses = []
+            for i,row in tsv.iterrows():
+                clauses.append(row)
+
+            print test_file
+            str_seqs, label_seqs = read_passages_from_tsv(clauses, sec=args.paper_section)
             
             test_seq_lengths, X_test, _ = nnt.make_data(clauses, 
                                                         use_attention, 
                                                         maxseqlen=maxseqlen, 
                                                         maxclauselen=maxclauselen, 
                                                         label_ind=label_ind, 
-                                                        train=False)
+                                                        train=False,
+                                                        sec=args.paper_section)
             print >>sys.stderr, "X_test shape:", X_test.shape
             pred_probs, pred_label_seqs, _ = nnt.predict(X_test, bid, test_seq_lengths)
+
+            '''
+            for i in range(0, len(label_seqs)):
+                for j in range(0, len(label_seqs[i])):
+                    actual_label = label_seqs[i][j] 
+                    predicted_label = pred_label_seqs[i][j]
+                    conf_matrix[actual_label][predicted_label] += 1
+                    
+                    if( actual_label == predicted_label ) :
+                        f_score_counts.get(actual_label)['tp'] += 1 
+                    elif( actual_label != predicted_label ) :
+                        f_score_counts.get(actual_label)['fn'] += 1 
+                        f_score_counts.get(predicted_label)['fp'] += 1 
+            '''
+            '''
             if show_att:
-                att_weights = nnt.get_attention_weights(X_test.astype('float32'))
-                clause_seqs, _ = read_passages(test_file, is_labeled=True)
-                paralens = [[len(clause.split()) for clause in seq] for seq in clause_seqs]
-                for clauselens, sample_att_weights, pred_label_seq in zip(paralens, att_weights, pred_label_seqs):
-                    for clauselen, clause_weights, pred_label in zip(clauselens, sample_att_weights[-len(clauselens):], pred_label_seq):
-                        print >>outfile, pred_label, " ".join(["%.4f"%val for val in clause_weights[-clauselen:]])
-                    print >>outfile
-            else:
-                for pred_label_seq in pred_label_seqs:
-                    for pred_label in pred_label_seq:
-                        print >>outfile, pred_label
-                    print >>outfile
+                    att_weights = nnt.get_attention_weights(X_test.astype('float32'))
+                    pred_labels = list(itertools.chain(*pred_label_seqs))
+                    tsv = pd.read_csv(test_file, sep='\t')
+                    tsv['Discourse Label'] = pd.Series(pred_labels)
+                    print >>sys.stderr, "Output file:", test_out_file_name
+                    tsv.to_csv(test_out_file_name, sep='\t')
+                    tsv = pd.read_csv(test_file, sep='\t')
+                    clauses = []q
+                    for i,row in tsv.iterrows():
+                        clauses.append(row)
+                    clause_seqs, _ = read_passages_from_tsv(clauses)
+                    paralens = [[len(clause.split()) for clause in seq] for seq in clause_seqs]
+                    for clauselens, sample_att_weights, pred_label_seq in zip(paralens, att_weights, pred_label_seqs):
+                        for clauselen, clause_weights, pred_label in zip(clauselens, sample_att_weights[-len(clauselens):], pred_label_seq):
+                            print >>outfile, pred_label, " ".join(["%.4f"%val for val in clause_weights[-clauselen:]])
+                        print >>outfile
+                    
+            else:'''
+
+            # Write output to data files.
+            pred_labels = list(itertools.chain(*pred_label_seqs))
+            tsv = pd.read_csv(test_file, sep='\t',quoting=csv.QUOTE_NONE, encoding='utf-8')
+            tsv['Discourse Label'] = pd.Series(pred_labels)
+            print >>sys.stderr, "Output file:", test_out_file_name
+            tsv.to_csv(test_out_file_name, sep='\t',encoding='utf-8')
+
+        print "CONFUSION MATRIX"
+        s = "            "
+        for l in all_actual_labels:
+            s += "%5s" % (l[:4]) + " "
+        print s
+        for l in all_actual_labels:
+            s = "%12s" % (l)
+            for ll in all_actual_labels:
+                s += "%5d" % (conf_matrix[l][ll])
+            print s
+        
+        print "\n~~~~~~~\n"
+        
+        # PRINT SUMMARY DATA
+        print "%14s||%4s|%4s|%4s|| %4s| %4s|| %4s||" % ('label','tp','fp','fn','P','R','F1')
+        for l in all_actual_labels:
+            tp = f_score_counts.get(l)['tp']
+            fp = f_score_counts.get(l)['fp']
+            fn = f_score_counts.get(l)['fn']
+            P = 0.0 if tp == 0 else 1.0 * tp/(tp+fp)
+            R = 0.0 if tp == 0 else 1.0 * tp/(tp+fn)
+            F1 = (P + R) / 2
+            print "%14s||%4d|%4d|%4d|| %0.2f| %0.2f|| %0.2f||" % (l,tp,fp,fn,P,R,F1)
